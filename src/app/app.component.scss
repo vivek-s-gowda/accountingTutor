@@ -1,0 +1,60 @@
+.layout {
+  display: flex;
+  //   flex-direction: column;
+  padding: 50px;
+
+  .content-area {
+    display: flex;
+    flex-direction: column;
+    .header {
+      height: 20px;
+      width: 100%;
+      font-size: 30pt;
+      height: 100px;
+    }
+    .transaction-input {
+      display: flex;
+      padding: 10px;
+      border: 1px grey solid;
+      width: 40%;
+      border-radius: 3px;
+      label {
+        font-size: 12pt;
+      }
+      input {
+        height: 20px;
+        width: 70%;
+        border: none;
+        text-align: right;
+      }
+      input:focus {
+        outline: unset;
+        font-size: 14pt;
+      }
+    }
+    .line {
+      margin-top: 30px;
+      border: 1px solid #818181;
+    }
+  }
+  .graphContainer {
+    display: flex;
+    width: 30%;
+    flex-wrap: wrap;
+    .balance-sheet {
+        margin-top: 10%;
+        margin-left: 2%;
+        height: 10%;
+      }
+  }
+
+}
+select {
+  border: none;
+}
+input {
+  border: none;
+}
+button {
+  border: none;
+}
