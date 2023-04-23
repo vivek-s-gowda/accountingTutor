@@ -73,13 +73,13 @@ export class AppComponent implements OnInit {
     plugins: {
       title: {
         display: true,
-        text: 'Assets',
+        text: 'Balance Sheet',
       },
     },
     scales: {
       x: {
         stacked: true,
-        display: false,
+        // display: false,
       },
       y: {
         stacked: true,
@@ -87,10 +87,10 @@ export class AppComponent implements OnInit {
       },
     },
   };
-  public barChartLabelsAssets = ['Assets'];
+  public barChartLabelsAssets = ['Assets', 'Liability'];
   public barChartTypeAssets = 'bar';
   public barChartLegendAssets = true;
-  public barChartDataAssets: any = [{ data: [], label: '' }];
+  public barChartDataAssets: any = [];
 
   public barChartOptionsRevenue = {
     scaleShowVerticalLines: false,
@@ -99,13 +99,13 @@ export class AppComponent implements OnInit {
     plugins: {
       title: {
         display: true,
-        text: 'Revenue',
+        text: 'Income Statement',
       },
     },
     scales: {
       x: {
         stacked: true,
-        display: false,
+        // display: false,
       },
       y: {
         stacked: true,
@@ -113,10 +113,10 @@ export class AppComponent implements OnInit {
       },
     },
   };
-  public barChartLabelsRevenue = ['Revenue'];
+  public barChartLabelsRevenue = ['Revenue', 'Expenses'];
   public barChartTypeRevenue = 'bar';
   public barChartLegendRevenue = true;
-  public barChartDataRevenue: any = [{ data: [], label: '' }];
+  public barChartDataRevenue: any = [];
 
   public barChartOptionsExpenses = {
     scaleShowVerticalLines: false,
@@ -201,6 +201,8 @@ export class AppComponent implements OnInit {
   }
 
   submit() {
+    this.barChartDataAssets = [];
+    this.barChartDataRevenue = [];
     if (this.transaction === '') {
       this.showError = true;
       this.errorMessage = 'Please fill value for transaction ';
@@ -219,22 +221,48 @@ export class AppComponent implements OnInit {
 
     this.columns = this.helperService.mergeColumns(this.resultGrid);
     this.gridRows = this.helperService.getRowX(this.rows);
-    this.barChartDataLiability = this.helperService.getLiabilityGraph(
-      this.columns,
-      this.gridRows
-    );
-    this.barChartDataAssets = this.helperService.getAssetsGraph(
-      this.columns,
-      this.gridRows
-    );
-    this.barChartDataExpenses = this.helperService.getExpensesGraph(
-      this.columns,
-      this.gridRows
-    );
-    this.barChartDataRevenue = this.helperService.getRevenueGraph(
-      this.columns,
-      this.gridRows
-    );
+    // this.barChartDataAssets = [...this.barChartDataAssets,this.helperService.getLiabilityGraph(
+    //   this.columns,
+    //   this.gridRows
+    // )];
+    // this.barChartDataAssets = [...this.barChartDataAssets,this.helperService.getAssetsGraph(
+    //   this.columns,
+    //   this.gridRows
+    // )];
+
+    this.helperService
+      .getLiabilityGraph(this.columns, this.gridRows)
+      .forEach((liabilityGraph: any) => {
+        this.barChartDataAssets = [...this.barChartDataAssets, liabilityGraph];
+      });
+    this.helperService
+      .getAssetsGraph(this.columns, this.gridRows)
+      .forEach((assetGraph: any) => {
+        this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
+      });
+    // console.log(this.barChartDataAssets, "barChartDataAssets")
+
+    // this.barChartDataExpenses = this.helperService.getExpensesGraph(
+    //   this.columns,
+    //   this.gridRows
+    // );
+    // this.barChartDataRevenue = this.helperService.getRevenueGraph(
+    //   this.columns,
+    //   this.gridRows
+    // );
+
+    this.helperService
+      .getRevenueGraph(this.columns, this.gridRows)
+      .forEach((RevenueGraph: any) => {
+        this.barChartDataRevenue = [...this.barChartDataRevenue, RevenueGraph];
+      });
+
+    this.helperService
+      .getExpensesGraph(this.columns, this.gridRows)
+      .forEach((expensesGraph: any) => {
+        this.barChartDataRevenue = [...this.barChartDataRevenue, expensesGraph];
+      });
+
     this.total = this.helperService.getTotal(this.columns, this.gridRows); /// need to work
     this.rows = [
       {

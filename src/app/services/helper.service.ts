@@ -241,7 +241,7 @@ export class HelperService {
         });
         assetsGraph.push({
           label: column,
-          data: [columnSum],
+          data: [columnSum,0],
         });
       }
     });
@@ -275,7 +275,7 @@ export class HelperService {
         });
         LiabilityGraph.push({
           label: column,
-          data: [columnSum],
+          data: [0,columnSum],
         });
       }
     });
@@ -301,7 +301,7 @@ export class HelperService {
         });
         RevenueGraph.push({
           label: column,
-          data: [columnSum],
+          data: [columnSum,0],
         });
       }
     });
@@ -328,7 +328,7 @@ export class HelperService {
         });
         ExpensesGraph.push({
           label: column,
-          data: [columnSum],
+          data: [0,columnSum],
         });
       }
     });
