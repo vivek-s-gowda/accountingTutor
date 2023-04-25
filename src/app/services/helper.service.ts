@@ -47,45 +47,6 @@ export class HelperService {
     'Interest payable',
   ];
 
-  //   typesMap: any = {
-  //     'Accm. Depn': 'XA',
-  //     'Accounts payable': 'Liability',
-  //     'Accounts receivable': 'Assets',
-  //     'Addnl. Paid in Capital': 'SHE',
-  //     'Allowance for Uncollectables or Bad debt': 'XA',
-  //     'Bad debt Expense': 'SHE-IS',
-  //     'Bond discount': 'XL',
-  //     'Bond premium': 'XL',
-  //     'Bonds payable': 'Liability',
-  //     Cash: 'Assets',
-  //     'Common stock': 'SHE',
-  //     'Depreciation Expense': 'SHE-IS',
-  //     'Dividend/Investment income': 'SHE-IS',
-  //     Goodwill: 'Assets',
-  //     'Goodwill Amortization Expense': 'SHE-IS',
-  //     'Interest expense': 'SHE-IS',
-  //     Investments: 'Assets',
-  //     'Investment Income': 'SHE-IS',
-  //     Land: 'Assets',
-  //     Loss: 'SHE-IS',
-  //     PPE: 'Assets',
-  //     'Profit on retirement of bonds': 'SHE-IS',
-  //     'Realized gain': 'SHE-IS',
-  //     'Retained Earnings': 'SHE',
-  //     Revenue: 'SHE-IS',
-  //     'Treasury stock': 'XSHE',
-  //     'Unbilled Revenue': 'Assets',
-  //     'Unearned Revenue': 'Liability',
-  //     'Unrealized Gain': 'SHE',
-  //     'Unrealized Loss': 'SHE',
-  //     'Realized loss': 'SHE-IS',
-  //     Gain: 'SHE-IS',
-  //     'Dividend payables': 'Liability',
-  //     'Insurance Expense': 'SHE-IS',
-  //     'Notes payable': 'Liability',
-  //     'Interest payable': 'Liability',
-  //   };
-
   typesMap: any = {
     'Accm. Depn': 'XA',
     'Accounts payable': 'Liability',
@@ -173,6 +134,8 @@ export class HelperService {
 
   mergeColumns(data: any) {
     let columns: any = ['Transaction'];
+
+    
     data.forEach((item: any) => {
       item.forEach((itemx: any) => {
         if (!columns.includes(itemx.selectedAccount))
@@ -318,35 +281,6 @@ export class HelperService {
           });
         }
     })
-    // columnData.forEach((column: any) => {
-    //   let columnSum: number = 0;
-    //   if (
-    //     [
-    //       'Accounts payable',
-    //       'Bonds payable',
-    //       'Unearned Revenue',
-    //       'Dividend payables',
-    //       'Notes payable',
-    //       'Interest payable',
-    //       'Bond discount',
-    //       'Bond premium',
-    //       'Addnl. Paid in Capital',
-    //       'Common stock',
-    //       'Retained Earnings',
-    //       'Unrealized Gain',
-    //       'Unrealized Loss',
-    //       'Treasury stock',
-    //     ].includes(column.toString())
-    //   ) {
-    //     data.forEach((row: any) => {
-    //       columnSum = columnSum + Number(row[constantsX.accountName[column]]);
-    //     });
-    //     LiabilityGraph.push({
-    //       label: column,
-    //       data: [0, columnSum],
-    //     });
-    //   }
-    // });
     return LiabilityGraph;
   }
 

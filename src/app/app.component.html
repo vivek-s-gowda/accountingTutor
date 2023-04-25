@@ -29,7 +29,7 @@
       <tr *ngFor="let row of rows; index as i">
         <td>
           <select
-            (change)="accountChanges(i)"
+            (change)="accountChanges(i);showError = false; errorMessage = '';"
             [(ngModel)]="row.selectedAccount"
           >
             <option *ngFor="let account of row.names" [ngValue]="account">
@@ -42,7 +42,7 @@
         </td>
         <td>
           <select
-            (change)="increaseDecreaseChange(i)"
+            (change)="increaseDecreaseChange(i); showError = false; errorMessage = '';"
             [(ngModel)]="row.selectedIncreaseDecrease"
           >
             <option
@@ -63,7 +63,7 @@
         </td>
         <td>{{ row.debitCredit }}</td>
         <td>
-          <button (click)="removeRow(i)">X</button>
+          <button (click)="removeRow(i); showError = false; errorMessage = '';">X</button>
         </td>
       </tr>
     </table>
@@ -85,10 +85,14 @@
         >
           {{ row }}
         </th>
+        <th></th>
       </tr>
       <tr *ngFor="let row of gridRows; index as k">
         <td *ngFor="let y of columns; index as i">
           {{ getAccountNameIndexAndValue(row, y) }}
+        </td>
+        <td>
+          <button (click)="removeDetailRow(k)">X</button>
         </td>
       </tr>
       <tr>

@@ -200,6 +200,36 @@ export class AppComponent implements OnInit {
     this.rows.splice(index, 1);
   }
 
+  removeDetailRow(index: number) {
+    this.gridRows.splice(index, 1);
+    this.total = this.helperService.getTotal(this.columns, this.gridRows); /// need to work
+
+    this.barChartDataAssets = [];
+    this.barChartDataRevenue = [];
+    this.helperService
+      .getLiabilityGraph(this.total)
+      .forEach((liabilityGraph: any) => {
+        this.barChartDataAssets = [...this.barChartDataAssets, liabilityGraph];
+      });
+    this.helperService
+      .getAssetsGraph(this.columns, this.gridRows)
+      .forEach((assetGraph: any) => {
+        this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
+      });
+
+    this.helperService
+      .getRevenueGraph(this.columns, this.gridRows)
+      .forEach((RevenueGraph: any) => {
+        this.barChartDataRevenue = [...this.barChartDataRevenue, RevenueGraph];
+      });
+
+    this.helperService
+      .getExpensesGraph(this.columns, this.gridRows)
+      .forEach((expensesGraph: any) => {
+        this.barChartDataRevenue = [...this.barChartDataRevenue, expensesGraph];
+      });
+  }
+
   submit() {
     this.barChartDataAssets = [];
     this.barChartDataRevenue = [];
@@ -230,8 +260,7 @@ export class AppComponent implements OnInit {
     //   this.gridRows
     // )];
 
-
-    this.columns = this.helperService.getUpdateColumn()
+    this.columns = this.helperService.getUpdateColumn();
     this.total = this.helperService.getTotal(this.columns, this.gridRows); /// need to work
 
     this.helperService
