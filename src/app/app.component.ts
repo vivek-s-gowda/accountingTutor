@@ -211,7 +211,7 @@ export class AppComponent implements OnInit {
     if (this.helperService.isCreditEqualToDebit(this.rows)) {
       this.showError = true;
       this.errorMessage =
-        'PError.  Sum of debtis does not equal sum of credits. ';
+        'Error.  Sum of debtis does not equal sum of credits. ';
       return;
     }
     this.showGrid = true;
@@ -230,8 +230,12 @@ export class AppComponent implements OnInit {
     //   this.gridRows
     // )];
 
+
+    this.columns = this.helperService.getUpdateColumn()
+    this.total = this.helperService.getTotal(this.columns, this.gridRows); /// need to work
+
     this.helperService
-      .getLiabilityGraph(this.columns, this.gridRows)
+      .getLiabilityGraph(this.total)
       .forEach((liabilityGraph: any) => {
         this.barChartDataAssets = [...this.barChartDataAssets, liabilityGraph];
       });
@@ -262,8 +266,6 @@ export class AppComponent implements OnInit {
       .forEach((expensesGraph: any) => {
         this.barChartDataRevenue = [...this.barChartDataRevenue, expensesGraph];
       });
-
-    this.total = this.helperService.getTotal(this.columns, this.gridRows); /// need to work
     this.rows = [
       {
         names: this.helperService.getAccountNames(),

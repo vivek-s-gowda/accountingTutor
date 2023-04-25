@@ -6,6 +6,7 @@ import { constantsX } from '../constants/constant';
 })
 export class HelperService {
   rowData: any = [];
+  updatedColumn: any = [];
   accountName = [
     'Select Account..',
     'Accm. Depn',
@@ -178,6 +179,7 @@ export class HelperService {
           columns.push(itemx.selectedAccount);
       });
     });
+    this.updatedColumn = columns;
     return columns;
   }
 
@@ -201,6 +203,36 @@ export class HelperService {
       });
       totalColumn[constantsX.accountName[column]] = columnSum;
     });
+    return this.balanceTheSheet(totalColumn);
+  }
+
+  balanceTheSheet(totalColumn: any) {
+    let revenueTotal = 0;
+    [
+      'Dividend/Investment income',
+      'Investment Income',
+      'Profit on retirement of bonds',
+      'Realized gain',
+      'Revenue',
+      'Gain',
+    ].forEach((cols: any) => {
+      revenueTotal = revenueTotal + totalColumn[constantsX.accountName[cols]];
+    });
+    let expencesTotal = 0;
+    [
+      'Bad debt Expense',
+      'Depreciation Expense',
+      'Goodwill Amortization Expense',
+      'Interest expense',
+      'Loss',
+      'Realized loss',
+      'Insurance Expense',
+    ].forEach((cols: any) => {
+      expencesTotal = expencesTotal + totalColumn[constantsX.accountName[cols]];
+    });
+    let retainedEarnings = Number(revenueTotal) - Number(expencesTotal);
+    this.updateColumn(retainedEarnings);
+    totalColumn[constantsX.accountName['Retained Earnings']] = retainedEarnings;
     return totalColumn;
   }
 
@@ -217,6 +249,17 @@ export class HelperService {
       });
     });
     return barChartData;
+  }
+
+  updateColumn(retainedEarnings: number) {
+    if (retainedEarnings != 0 && !this.updatedColumn?.includes('Retained Earnings')) {
+      this.updatedColumn.push('Retained Earnings');
+    }
+    return this.updatedColumn;
+  }
+
+  getUpdateColumn() {
+    return this.updatedColumn;
   }
 
   getAssetsGraph(columnData: any, data: any) {
@@ -241,44 +284,69 @@ export class HelperService {
         });
         assetsGraph.push({
           label: column,
-          data: [columnSum,0],
+          data: [columnSum, 0],
         });
       }
     });
     return assetsGraph;
   }
 
-  getLiabilityGraph(columnData: any, data: any) {
+  getLiabilityGraph(data: any) {
     let LiabilityGraph: any = [];
-    columnData.forEach((column: any) => {
-      let columnSum: number = 0;
-      if (
-        [
-          'Accounts payable',
-          'Bonds payable',
-          'Unearned Revenue',
-          'Dividend payables',
-          'Notes payable',
-          'Interest payable',
-          'Bond discount',
-          'Bond premium',
-          'Addnl. Paid in Capital',
-          'Common stock',
-          'Retained Earnings',
-          'Unrealized Gain',
-          'Unrealized Loss',
-          'Treasury stock',
-        ].includes(column.toString())
-      ) {
-        data.forEach((row: any) => {
-          columnSum = columnSum + Number(row[constantsX.accountName[column]]);
-        });
-        LiabilityGraph.push({
-          label: column,
-          data: [0,columnSum],
-        });
-      }
-    });
+    [
+      'Accounts payable',
+      'Bonds payable',
+      'Unearned Revenue',
+      'Dividend payables',
+      'Notes payable',
+      'Interest payable',
+      'Bond discount',
+      'Bond premium',
+      'Addnl. Paid in Capital',
+      'Common stock',
+      'Retained Earnings',
+      'Unrealized Gain',
+      'Unrealized Loss',
+      'Treasury stock',
+    ].forEach((col:string) => {
+        let columnSum: number = 0;
+        columnSum = columnSum + Number(data[constantsX.accountName[col]]);
+        if(columnSum != 0) {
+          LiabilityGraph.push({
+            label: col,
+            data: [0, columnSum],
+          });
+        }
+    })
+    // columnData.forEach((column: any) => {
+    //   let columnSum: number = 0;
+    //   if (
+    //     [
+    //       'Accounts payable',
+    //       'Bonds payable',
+    //       'Unearned Revenue',
+    //       'Dividend payables',
+    //       'Notes payable',
+    //       'Interest payable',
+    //       'Bond discount',
+    //       'Bond premium',
+    //       'Addnl. Paid in Capital',
+    //       'Common stock',
+    //       'Retained Earnings',
+    //       'Unrealized Gain',
+    //       'Unrealized Loss',
+    //       'Treasury stock',
+    //     ].includes(column.toString())
+    //   ) {
+    //     data.forEach((row: any) => {
+    //       columnSum = columnSum + Number(row[constantsX.accountName[column]]);
+    //     });
+    //     LiabilityGraph.push({
+    //       label: column,
+    //       data: [0, columnSum],
+    //     });
+    //   }
+    // });
     return LiabilityGraph;
   }
 
@@ -301,7 +369,7 @@ export class HelperService {
         });
         RevenueGraph.push({
           label: column,
-          data: [columnSum,0],
+          data: [columnSum, 0],
         });
       }
     });
@@ -328,7 +396,7 @@ export class HelperService {
         });
         ExpensesGraph.push({
           label: column,
-          data: [0,columnSum],
+          data: [0, columnSum],
         });
       }
     });
