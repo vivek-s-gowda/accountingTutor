@@ -133,15 +133,27 @@ export class HelperService {
   dataProvider() {}
 
   mergeColumns(data: any) {
-    let columns: any = ['Transaction'];
-
-    
+    let columns: any = [];
+    let orderCols: any = [0];
     data.forEach((item: any) => {
       item.forEach((itemx: any) => {
         if (!columns.includes(itemx.selectedAccount))
-          columns.push(itemx.selectedAccount);
+          // columns.push(itemx.selectedAccount);
+          orderCols.push(constantsX.accountName[itemx.selectedAccount]);
       });
     });
+    orderCols
+      .sort((a: number, b: number) => a - b)
+      .forEach((index: number) => {
+        for (let key in constantsX.accountName) {
+          // console.log(key);
+          // console.log(constantsX.accountName[key]);
+          if (constantsX.accountName[key] == index) {
+            columns.push(key);
+          }
+        }
+      });
+    // console.log('the sorted header', columns);
     this.updatedColumn = columns;
     return columns;
   }
@@ -215,7 +227,10 @@ export class HelperService {
   }
 
   updateColumn(retainedEarnings: number) {
-    if (retainedEarnings != 0 && !this.updatedColumn?.includes('Retained Earnings')) {
+    if (
+      retainedEarnings != 0 &&
+      !this.updatedColumn?.includes('Retained Earnings')
+    ) {
       this.updatedColumn.push('Retained Earnings');
     }
     return this.updatedColumn;
@@ -271,16 +286,16 @@ export class HelperService {
       'Unrealized Gain',
       'Unrealized Loss',
       'Treasury stock',
-    ].forEach((col:string) => {
-        let columnSum: number = 0;
-        columnSum = columnSum + Number(data[constantsX.accountName[col]]);
-        if(columnSum != 0) {
-          LiabilityGraph.push({
-            label: col,
-            data: [0, columnSum],
-          });
-        }
-    })
+    ].forEach((col: string) => {
+      let columnSum: number = 0;
+      columnSum = columnSum + Number(data[constantsX.accountName[col]]);
+      if (columnSum != 0) {
+        LiabilityGraph.push({
+          label: col,
+          data: [0, columnSum],
+        });
+      }
+    });
     return LiabilityGraph;
   }
 
