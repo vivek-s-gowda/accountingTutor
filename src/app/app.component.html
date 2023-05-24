@@ -8,7 +8,11 @@
         name="transaction"
         id="transaction"
         [(ngModel)]="transaction"
-        (input)="showError = false; errorMessage = ''; transaction =='' ? showError = true: showError=false"
+        (input)="
+          showError = false;
+          errorMessage = '';
+          transaction == '' ? (showError = true) : (showError = false)
+        "
       />
     </div>
     <div class="line"></div>
@@ -29,7 +33,7 @@
       <tr *ngFor="let row of rows; index as i">
         <td>
           <select
-            (change)="accountChanges(i);showError = false; errorMessage = '';"
+            (change)="accountChanges(i); showError = false; errorMessage = ''"
             [(ngModel)]="row.selectedAccount"
           >
             <option *ngFor="let account of row.names" [ngValue]="account">
@@ -42,7 +46,9 @@
         </td>
         <td>
           <select
-            (change)="increaseDecreaseChange(i); showError = false; errorMessage = '';"
+            (change)="
+              increaseDecreaseChange(i); showError = false; errorMessage = ''
+            "
             [(ngModel)]="row.selectedIncreaseDecrease"
           >
             <option
@@ -58,12 +64,14 @@
             type="text"
             [(ngModel)]="row.amount"
             (change)="onAmountChange(i)"
-            (input)="showError = false; errorMessage = '';"
+            (input)="showError = false; errorMessage = ''"
           />
         </td>
         <td>{{ row.debitCredit }}</td>
         <td>
-          <button (click)="removeRow(i); showError = false; errorMessage = '';">X</button>
+          <button (click)="removeRow(i); showError = false; errorMessage = ''">
+            X
+          </button>
         </td>
       </tr>
     </table>
@@ -75,6 +83,39 @@
         <span *ngIf="showError"> {{ errorMessage }}</span>
       </div>
       <button (click)="addRow()" class="col-2">Add Row</button>
+    </div>
+    <br />
+    <div class="row">
+      <button
+        (click)="isUpdateOpeningBalance = !isUpdateOpeningBalance"
+        class="col-4"
+      >
+        Update opening balance
+      </button>
+      <div class="col-6" *ngIf="isUpdateOpeningBalance">
+        <select [(ngModel)]="updatedOpeningBalanceAccountName">
+          <option
+            *ngFor="let account of updetedOpeningList"
+            [ngValue]="account"
+          >
+            {{ account }}
+          </option>
+        </select>
+      </div>
+      <div class="col-2" *ngIf="isUpdateOpeningBalance">
+        <input
+          type="text"
+          style="width: 100px; border: 1px solid grey"
+          [(ngModel)]="updatedOpeningBalanceAccountValue"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="row" *ngIf="isUpdateOpeningBalance">
+      <div class="col-10"></div>
+      <div class="col-2">
+        <button (click)="updateOpeningBalance()">Update</button>
+      </div>
     </div>
     <br />
     <table *ngIf="showGrid" class="table table-bordered">
@@ -102,27 +143,8 @@
       </tr>
     </table>
     <br />
-    <!-- <h3 *ngIf="showGrid">Total :</h3>
-    <br />
-    <table *ngIf="showGrid" class="table table-bordered">
-      <tr>
-        <th
-          class="border-right border border-success"
-          *ngFor="let row of columns; index as i"
-        >
-          {{ totalHeader(row, i) }}
-        </th>
-      </tr>
-      <tr>
-        <td *ngFor="let y of columns; index as i">
-          {{ getTotalValue(total, i, y) }}
-        </td>
-      </tr>
-    </table> -->
   </div>
   <div class="graphContainer">
-
-    <!-- <h3>Balance Sheet</h3> -->
     <div class="balance-sheet">
       <div style="display: block">
         <canvas
@@ -131,25 +153,11 @@
           [labels]="barChartLabelsAssets"
           [options]="barChartOptionsAssets"
           [legend]="barChartLegendAssets"
-          style="height: 400px; width: 300px; margin-left: 20px;"
+          style="height: 400px; width: 300px; margin-left: 20px"
         >
         </canvas>
       </div>
     </div>
-    <!-- <div class="balance-sheet">
-      <div style="display: block">
-        <canvas
-          baseChart
-          [datasets]="barChartDataLiability"
-          [labels]="barChartLabelsLiability"
-          [options]="barChartOptionsLiability"
-          [legend]="barChartLegendLiability"
-          style="height: 400px; width: 150px"
-        >
-        </canvas>
-      </div>
-    </div> -->
-
     <div class="balance-sheet">
       <div style="display: block">
         <canvas
@@ -158,25 +166,10 @@
           [labels]="barChartLabelsRevenue"
           [options]="barChartOptionsRevenue"
           [legend]="barChartLegendRevenue"
-          style="height: 400px; width: 300px; margin-left: 20px;"
+          style="height: 400px; width: 300px; margin-left: 20px"
         >
         </canvas>
       </div>
     </div>
-
-    <!-- <div class="balance-sheet">
-      <div style="display: block">
-        <canvas
-          baseChart
-          [datasets]="barChartDataExpenses"
-          [labels]="barChartLabelsExpenses"
-          [options]="barChartOptionsExpenses"
-          [legend]="barChartLegendExpenses"
-          style="height: 400px; width: 150px"
-        >
-        </canvas>
-      </div>
-    </div> -->
-
   </div>
 </div>

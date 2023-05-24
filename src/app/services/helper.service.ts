@@ -137,8 +137,7 @@ export class HelperService {
     let orderCols: any = [0];
     data.forEach((item: any) => {
       item.forEach((itemx: any) => {
-        if (!columns.includes(itemx.selectedAccount))
-          // columns.push(itemx.selectedAccount);
+        if (!orderCols.includes(constantsX.accountName[itemx.selectedAccount]))
           orderCols.push(constantsX.accountName[itemx.selectedAccount]);
       });
     });
@@ -146,14 +145,11 @@ export class HelperService {
       .sort((a: number, b: number) => a - b)
       .forEach((index: number) => {
         for (let key in constantsX.accountName) {
-          // console.log(key);
-          // console.log(constantsX.accountName[key]);
           if (constantsX.accountName[key] == index) {
             columns.push(key);
           }
         }
       });
-    // console.log('the sorted header', columns);
     this.updatedColumn = columns;
     return columns;
   }
@@ -179,6 +175,10 @@ export class HelperService {
       totalColumn[constantsX.accountName[column]] = columnSum;
     });
     return this.balanceTheSheet(totalColumn);
+  }
+
+  updateTotalWithContra() {
+
   }
 
   balanceTheSheet(totalColumn: any) {
@@ -208,6 +208,11 @@ export class HelperService {
     let retainedEarnings = Number(revenueTotal) - Number(expencesTotal);
     this.updateColumn(retainedEarnings);
     totalColumn[constantsX.accountName['Retained Earnings']] = retainedEarnings;
+    totalColumn[constantsX.accountName['PPE']] = totalColumn[constantsX.accountName['PPE']] - (totalColumn[constantsX.accountName['Accm. Depn']]);
+    totalColumn[constantsX.accountName['Accounts receivable']] = totalColumn[constantsX.accountName['Accounts receivable']] - (totalColumn[constantsX.accountName['Allowance for Uncollectables or Bad debt']]);
+    totalColumn[constantsX.accountName['Bonds payable']] = totalColumn[constantsX.accountName['Bonds payable']] - (totalColumn[constantsX.accountName['Bond discount']]);
+    totalColumn[constantsX.accountName['Bonds payable']] = totalColumn[constantsX.accountName['Bonds payable']] - (totalColumn[constantsX.accountName['Bond premium']]);
+    totalColumn[constantsX.accountName['Common stock']] = totalColumn[constantsX.accountName['Common stock']] - (totalColumn[constantsX.accountName['Treasury stock']]);
     return totalColumn;
   }
 
@@ -253,8 +258,6 @@ export class HelperService {
           'Land',
           'PPE',
           'Unbilled Revenue',
-          'Accm. Depn',
-          'Allowance for Uncollectables or Bad debt',
         ].includes(column.toString())
       ) {
         data.forEach((row: any) => {
@@ -278,14 +281,11 @@ export class HelperService {
       'Dividend payables',
       'Notes payable',
       'Interest payable',
-      'Bond discount',
-      'Bond premium',
       'Addnl. Paid in Capital',
       'Common stock',
       'Retained Earnings',
       'Unrealized Gain',
       'Unrealized Loss',
-      'Treasury stock',
     ].forEach((col: string) => {
       let columnSum: number = 0;
       columnSum = columnSum + Number(data[constantsX.accountName[col]]);

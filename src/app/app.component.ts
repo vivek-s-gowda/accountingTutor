@@ -15,6 +15,10 @@ export class AppComponent implements OnInit {
   transaction: string = '';
   showError: boolean = false;
   errorMessage: string = '';
+  updatedOpeningBalanceAccountName: string = 'Select Account..';
+  updetedOpeningList: any = this.helperService.getAccountNames();
+  isUpdateOpeningBalance: boolean = false;
+  updatedOpeningBalanceAccountValue: string = '';
   rows: any = [
     {
       names: this.helperService.getAccountNames(),
@@ -53,11 +57,9 @@ export class AppComponent implements OnInit {
     scales: {
       x: {
         stacked: true,
-        display: false,
       },
       y: {
         stacked: true,
-        display: false,
       },
     },
   };
@@ -79,11 +81,9 @@ export class AppComponent implements OnInit {
     scales: {
       x: {
         stacked: true,
-        // display: false,
       },
       y: {
         stacked: true,
-        display: false,
       },
     },
   };
@@ -105,11 +105,9 @@ export class AppComponent implements OnInit {
     scales: {
       x: {
         stacked: true,
-        // display: false,
       },
       y: {
         stacked: true,
-        display: false,
       },
     },
   };
@@ -131,11 +129,9 @@ export class AppComponent implements OnInit {
     scales: {
       x: {
         stacked: true,
-        display: false,
       },
       y: {
         stacked: true,
-        display: false,
       },
     },
   };
@@ -251,17 +247,8 @@ export class AppComponent implements OnInit {
 
     this.columns = this.helperService.mergeColumns(this.resultGrid);
     this.gridRows = this.helperService.getRowX(this.rows);
-    // this.barChartDataAssets = [...this.barChartDataAssets,this.helperService.getLiabilityGraph(
-    //   this.columns,
-    //   this.gridRows
-    // )];
-    // this.barChartDataAssets = [...this.barChartDataAssets,this.helperService.getAssetsGraph(
-    //   this.columns,
-    //   this.gridRows
-    // )];
-
     this.columns = this.helperService.getUpdateColumn();
-    this.total = this.helperService.getTotal(this.columns, this.gridRows); /// need to work
+    this.total = this.helperService.getTotal(this.columns, this.gridRows); 
 
     this.helperService
       .getLiabilityGraph(this.total)
@@ -273,17 +260,6 @@ export class AppComponent implements OnInit {
       .forEach((assetGraph: any) => {
         this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
       });
-    // console.log(this.barChartDataAssets, "barChartDataAssets")
-
-    // this.barChartDataExpenses = this.helperService.getExpensesGraph(
-    //   this.columns,
-    //   this.gridRows
-    // );
-    // this.barChartDataRevenue = this.helperService.getRevenueGraph(
-    //   this.columns,
-    //   this.gridRows
-    // );
-
     this.helperService
       .getRevenueGraph(this.columns, this.gridRows)
       .forEach((RevenueGraph: any) => {
@@ -342,5 +318,36 @@ export class AppComponent implements OnInit {
   getTotalValue(row: any, index: number, columnName: string) {
     row[0] = 'Total';
     return row[constantsX.accountName[columnName]];
+  }
+
+  updateOpeningBalance() {
+    this.barChartDataAssets = [];
+    this.barChartDataRevenue = [];
+    console.log('the opening balance ', this.gridRows[0]);
+    this.gridRows[0][
+      constantsX.accountName[this.updatedOpeningBalanceAccountName]
+    ] = this.updatedOpeningBalanceAccountValue;
+    this.total = this.helperService.getTotal(this.columns, this.gridRows); /// need to work
+
+    this.helperService
+      .getLiabilityGraph(this.total)
+      .forEach((liabilityGraph: any) => {
+        this.barChartDataAssets = [...this.barChartDataAssets, liabilityGraph];
+      });
+    this.helperService
+      .getAssetsGraph(this.columns, this.gridRows)
+      .forEach((assetGraph: any) => {
+        this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
+      });
+    this.helperService
+      .getRevenueGraph(this.columns, this.gridRows)
+      .forEach((RevenueGraph: any) => {
+        this.barChartDataRevenue = [...this.barChartDataRevenue, RevenueGraph];
+      });
+    this.helperService
+      .getExpensesGraph(this.columns, this.gridRows)
+      .forEach((expensesGraph: any) => {
+        this.barChartDataRevenue = [...this.barChartDataRevenue, expensesGraph];
+      });
   }
 }
