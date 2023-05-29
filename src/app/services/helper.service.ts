@@ -233,17 +233,19 @@ export class HelperService {
   }
 
   updateColumn(retainedEarnings: number) {
-    this.updatedColumn = [];
     if (
       retainedEarnings != 0 &&
       !this.updatedColumn?.includes('Retained Earnings')
     ) {
       this.updatedColumn.push('Retained Earnings');
+
     }
+
     let sortUpdatedColumns = this.updatedColumn?.map((item:any)=>{
       return constantsX.accountName[item];
     });
-    console.log(sortUpdatedColumns.sort())
+    this.updatedColumn = [];
+    console.log(sortUpdatedColumns, this.updatedColumn)
     sortUpdatedColumns
     .sort((a: number, b: number) => a - b)
     .forEach((index: number) => {
