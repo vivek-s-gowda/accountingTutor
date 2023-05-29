@@ -6,11 +6,15 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BalanceSheetEquationComponent } from './balance-sheet-equation/balance-sheet-equation.component';
+import { IndexComponent } from './index/index.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BalanceSheetEquationComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
