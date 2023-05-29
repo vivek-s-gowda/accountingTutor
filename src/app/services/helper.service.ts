@@ -207,6 +207,7 @@ export class HelperService {
     });
     let retainedEarnings = Number(revenueTotal) - Number(expencesTotal);
     this.updateColumn(retainedEarnings);
+
     totalColumn[constantsX.accountName['Retained Earnings']] = retainedEarnings;
     totalColumn[constantsX.accountName['PPE']] = totalColumn[constantsX.accountName['PPE']] - (totalColumn[constantsX.accountName['Accm. Depn']]);
     totalColumn[constantsX.accountName['Accounts receivable']] = totalColumn[constantsX.accountName['Accounts receivable']] - (totalColumn[constantsX.accountName['Allowance for Uncollectables or Bad debt']]);
@@ -232,12 +233,26 @@ export class HelperService {
   }
 
   updateColumn(retainedEarnings: number) {
+    this.updatedColumn = [];
     if (
       retainedEarnings != 0 &&
       !this.updatedColumn?.includes('Retained Earnings')
     ) {
       this.updatedColumn.push('Retained Earnings');
     }
+    let sortUpdatedColumns = this.updatedColumn?.map((item:any)=>{
+      return constantsX.accountName[item];
+    });
+    console.log(sortUpdatedColumns.sort())
+    sortUpdatedColumns
+    .sort((a: number, b: number) => a - b)
+    .forEach((index: number) => {
+      for (let key in constantsX.accountName) {
+        if (constantsX.accountName[key] == index) {
+          this.updatedColumn.push(key);
+        }
+      }
+    });
     return this.updatedColumn;
   }
 

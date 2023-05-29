@@ -249,6 +249,7 @@ export class BalanceSheetEquationComponent implements OnInit {
     this.gridRows = this.helperService.getRowX(this.rows);
     this.columns = this.helperService.getUpdateColumn();
     this.total = this.helperService.getTotal(this.columns, this.gridRows);
+    // this.columns = this.helperService.mergeColumns(this.resultGrid);
 
     this.helperService
       .getLiabilityGraph(this.total)
