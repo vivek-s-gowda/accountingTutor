@@ -1,7 +1,7 @@
 .layout {
   display: flex;
   //   flex-direction: column;
-  padding: 50px;
+  padding: 40px;
   border-top: 3px #4a31df solid;
   .title {
     position: absolute;
@@ -16,11 +16,179 @@
     font-style: normal;
     font-weight: 900;
     font-size: 14px;
-    color: #FFFFFF;
+    color: #ffffff;
   }
   .content-area {
     display: flex;
     flex-direction: column;
+    .heading {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 40px;
+      color: #4a31df;
+    }
+    .tagline {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 24px;
+      color: rgba(0, 0, 0, 0.64);
+    }
+    .graph-and-input-area {
+      display: flex;
+
+      .opening-balance {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        gap: 8px;
+        width: 232px;
+        height: 360px;
+        background: #ffffff;
+        border: 1px solid #4a31df;
+        border-radius: 16px;
+        margin-top: 16px;
+
+        .opening-balance-title {
+          font-family: "Inter";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 20px;
+          color: #4a31df;
+        }
+
+        label {
+          font-family: "Inter";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 15px;
+          line-height: 16px;
+          color: rgba(0, 0, 0, 0.64);
+        }
+
+        select {
+          border: 1px solid #818181;
+          width: 100%;
+          border-radius: 3px;
+        }
+
+        input {
+          width: 100%;
+          border: 1px solid grey;
+          border-radius: 3px;
+        }
+
+        button {
+          margin-top: 80px;
+          align-self: flex-end;
+          background-color: #4a31df;
+          color: #ffffff;
+        }
+      }
+
+      .transcation-details {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 16px;
+        gap: 8px;
+        width: 424px;
+        height: 360px;
+        background: #ffffff;
+        border: 1px solid #4a31df;
+        border-radius: 16px;
+        flex: none;
+        flex-grow: 0;
+        margin-left: 8px;
+        margin-top: 16px;
+
+        .transtaction-title {
+          font-family: "Inter";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 20px;
+          color: #4a31df;
+          flex: none;
+          order: 0;
+          align-self: stretch;
+          flex-grow: 0;
+        }
+
+        .transaction-input-lable {
+          font-family: "Inter";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 15px;
+          line-height: 16px;
+          color: rgba(0, 0, 0, 0.64);
+          flex: none;
+          order: 0;
+          flex-grow: 0;
+          align-self: start;
+        }
+
+        .name-input {
+          background: #ffffff;
+          border: 1px solid #bebebe;
+          border-radius: 3px;
+          flex: none;
+          align-self: stretch;
+          flex-grow: 0;
+        }
+
+        .button-area {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+
+          button {
+            background-color: #4a31df;
+            color: #ffffff;
+          }
+        }
+      }
+
+      .balance-sheet-area {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        gap: 8px;
+        width: auto;
+        height: auto;
+        background: #ffffff;
+        border: 1px solid rgba(41, 46, 51, 0.24);
+        border-radius: 18px;
+        flex: none;
+        flex-grow: 0;
+        margin-top: 16px;
+        margin-left: 8px;
+      }
+
+      .income-sheet-area {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        gap: 8px;
+        width: auto;
+        height: auto;
+        background: #ffffff;
+        border: 1px solid rgba(41, 46, 51, 0.24);
+        border-radius: 18px;
+        flex: none;
+        flex-grow: 0;
+        margin-top: 16px;
+        margin-left: 16px;
+      }
+    }
+
     .header {
       height: 20px;
       width: 100%;

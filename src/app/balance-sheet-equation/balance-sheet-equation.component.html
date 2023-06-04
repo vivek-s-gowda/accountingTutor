@@ -2,7 +2,163 @@
   <div class="title">AccountingTutor</div>
   <div class="content-area">
     <!-- <div class="header">AccountingTutor.org</div> -->
-    <div class="transaction-input">
+    <div class="heading">Balance Sheet Equation</div>
+    <div class="tagline">Visualising the Balance Sheet & Income Statement</div>
+    <div class="graph-and-input-area">
+      <div class="opening-balance">
+        <div class="opening-balance-title">Opening Balance</div>
+
+        <label for="accountSelector">Account</label>
+        <select class="" [(ngModel)]="updatedOpeningBalanceAccountName">
+          <option
+            *ngFor="let account of updetedOpeningList"
+            [ngValue]="account"
+          >
+            {{ account }}
+          </option>
+        </select>
+
+        <label>Amount</label>
+        <input
+          type="text"
+          [(ngModel)]="updatedOpeningBalanceAccountValue"
+        />
+
+
+        <button (click)="updateOpeningBalance()">Update</button>
+      </div>
+
+      <div class="transcation-details">
+        <div class="transtaction-title">Transaction Details</div>
+        <label for="transaction" class="transaction-input-lable">Name </label>
+        <input
+          class="name-input"
+          type="text"
+          name="transaction"
+          id="transaction"
+          [(ngModel)]="transaction"
+          (input)="
+            showError = false;
+            errorMessage = '';
+            transaction == '' ? (showError = true) : (showError = false)
+          "
+        />
+
+        <table class="table table-bordered" style="display: block">
+          <tr>
+            <th scope="col" class="border-right border border-light">
+              Account
+            </th>
+            <th scope="col" class="border-right border border-light"></th>
+            <th scope="col" class="border-right border border-light">
+              Increased
+            </th>
+            <th scope="col" class="border-right border border-light">Amount</th>
+            <th scope="col" class="border-left border-light">
+              <!-- Debit/Credit -->
+            </th>
+            <th scope="col" class="border-right border-light"></th>
+          </tr>
+          <tr *ngFor="let row of rows; index as i">
+            <td>
+              <select
+                style="width: 100%"
+                (change)="
+                  accountChanges(i); showError = false; errorMessage = ''
+                "
+                [(ngModel)]="row.selectedAccount"
+              >
+                <option *ngFor="let account of row.names" [ngValue]="account">
+                  {{ account }}
+                </option>
+              </select>
+            </td>
+            <td>
+              {{ row.selectedType }}
+            </td>
+            <td>
+              <select
+                style="width: 100%"
+                (change)="
+                  increaseDecreaseChange(i);
+                  showError = false;
+                  errorMessage = ''
+                "
+                [(ngModel)]="row.selectedIncreaseDecrease"
+              >
+                <option
+                  *ngFor="let increaseDecrease of row.increaseDecrease"
+                  [ngValue]="increaseDecrease"
+                >
+                  {{ increaseDecrease }}
+                </option>
+              </select>
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 100%"
+                [(ngModel)]="row.amount"
+                (change)="onAmountChange(i)"
+                (input)="showError = false; errorMessage = ''"
+              />
+            </td>
+            <td style="width: 60px">{{ row.debitCredit }}</td>
+            <td>
+              <button
+                (click)="removeRow(i); showError = false; errorMessage = ''"
+              >
+                X
+              </button>
+            </td>
+          </tr>
+        </table>
+
+        <div class="button-area">
+          <button (click)="addRow()">Add Row</button>
+
+          <div class="text-center text-danger">
+            <span *ngIf="showError"> {{ errorMessage }}</span>
+          </div>
+          <button [disabled]="showError" (click)="submit()">Submit</button>
+        </div>
+      </div>
+
+      <div class="balance-sheet-area">
+        <div class="balance-sheet">
+          <div style="display: block">
+            <canvas
+              baseChart
+              [datasets]="barChartDataAssets"
+              [labels]="barChartLabelsAssets"
+              [options]="barChartOptionsAssets"
+              [legend]="barChartLegendAssets"
+              style="height: 400px; width: 300px; margin-left: 20px"
+            >
+            </canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="income-sheet-area">
+        <div class="balance-sheet">
+          <div style="display: block">
+            <canvas
+              baseChart
+              [datasets]="barChartDataRevenue"
+              [labels]="barChartLabelsRevenue"
+              [options]="barChartOptionsRevenue"
+              [legend]="barChartLegendRevenue"
+              style="height: 400px; width: 300px; margin-left: 20px"
+            >
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -------------------------- -->
+    <!-- <div class="transaction-input">
       <label for="transaction">Transaction : </label>
       <input
         type="text"
@@ -85,14 +241,16 @@
       </div>
       <button (click)="addRow()" class="col-2">Add Row</button>
     </div>
-    <br />
+    <br /> -->
+
+    <!-- -------------------------- -->
     <div class="row">
-      <button
+      <!-- <button
         (click)="isUpdateOpeningBalance = !isUpdateOpeningBalance"
         class="col-4"
       >
         Update opening balance
-      </button>
+      </button> -->
       <div class="col-6" *ngIf="isUpdateOpeningBalance">
         <select [(ngModel)]="updatedOpeningBalanceAccountName">
           <option
@@ -145,7 +303,8 @@
     </table>
     <br />
   </div>
-  <div class="graphContainer">
+
+  <!-- <div class="graphContainer">
     <div class="balance-sheet">
       <div style="display: block">
         <canvas
@@ -172,5 +331,6 @@
         </canvas>
       </div>
     </div>
-  </div>
+  </div> -->
+
 </div>

@@ -262,7 +262,7 @@ export class HelperService {
     return this.updatedColumn;
   }
 
-  getAssetsGraph(columnData: any, data: any) {
+  getAssetsGraph1(columnData: any, data: any) {
     let assetsGraph: any = [];
     columnData.forEach((column: any) => {
       let columnSum: number = 0;
@@ -283,6 +283,30 @@ export class HelperService {
         assetsGraph.push({
           label: column,
           data: [columnSum, 0],
+        });
+      }
+    });
+    return assetsGraph;
+  }
+
+  getAssetsGraph(data: any) {
+    let assetsGraph: any = [];
+    [
+      'Accounts receivable',
+      'Cash',
+      'Goodwill',
+      'Investments',
+      'Land',
+      'PPE',
+      'Unbilled Revenue',
+    ].forEach((col: string) => {
+      let columnSum: number = 0;
+      console.log(col, "the col details")
+      columnSum = columnSum + Number(data[constantsX.accountName[col]]);
+      if (columnSum != 0) {
+        assetsGraph.push({
+          label: col,
+          data: [columnSum,0],
         });
       }
     });

@@ -208,7 +208,7 @@ export class BalanceSheetEquationComponent implements OnInit {
         this.barChartDataAssets = [...this.barChartDataAssets, liabilityGraph];
       });
     this.helperService
-      .getAssetsGraph(this.columns, this.gridRows)
+      .getAssetsGraph(this.total)
       .forEach((assetGraph: any) => {
         this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
       });
@@ -257,7 +257,7 @@ export class BalanceSheetEquationComponent implements OnInit {
         this.barChartDataAssets = [...this.barChartDataAssets, liabilityGraph];
       });
     this.helperService
-      .getAssetsGraph(this.columns, this.gridRows)
+      .getAssetsGraph(this.total)
       .forEach((assetGraph: any) => {
         this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
       });
@@ -336,7 +336,7 @@ export class BalanceSheetEquationComponent implements OnInit {
         this.barChartDataAssets = [...this.barChartDataAssets, liabilityGraph];
       });
     this.helperService
-      .getAssetsGraph(this.columns, this.gridRows)
+      .getAssetsGraph(this.total)
       .forEach((assetGraph: any) => {
         this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
       });
