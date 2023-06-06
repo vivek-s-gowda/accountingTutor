@@ -1,5 +1,5 @@
 export class constantsX {
-  public static accountName: any = {
+  public static newAccountName: any = {
     'Select Account..': -1,
     Transaction: 0,
     Cash: 1,
@@ -40,10 +40,46 @@ export class constantsX {
     'Dividend/Investment income': 36,
   };
 
-  public static contraAccounts: any  = {
-    PPE : 'Accm. Depn',
-    'Accounts receivable' : 'Allowance for Uncollectables or Bad debt',
-    'Bonds payable' : 'Bond discount',
-    'Common stock' : 'Treasury stock'
-  }
+  public static accountName: any = {
+    'Select Account..': -1,
+    Transaction: 0,
+    Cash: 1,
+    'Accounts Receivable': 2,
+    'Allowance for Bad Debts': 3,
+    Inventory: 4,
+    'Pre Paid Asset': 5,
+    'Intangible Assets': 6,
+    'Other Assets': 7,
+    Investments: 8,
+    Goodwill: 9,
+    PPE: 10,
+    'Accumulated Depreciation': 11,
+    'Accounts payable': 12,
+    'Wages Payable': 13,
+    'Interest Payable': 14,
+    'Notes Payable': 15,
+    'Deferred Revenue': 16,
+    'Bank Loan': 17,
+    'Bonds payable': 18,
+    'Other Liabilities': 19,
+    'Dividends payable': 20,
+    'Common stock': 21,
+    'Addnl. Paid in Capital': 22,
+    'Treasury stock': 23,
+    'Retained Earnings': 24,
+    Revenue: 25,
+    'Investment Income': 26,
+    'Profit on Retirement of Bonds': 27,
+    'Dividend income': 28,
+    CoGS: 29,
+    'Rent Expenses': 30,
+    'Depreciation Expenses': 31,
+    'Wage Expenses': 32,
+    'Interest Expenses': 33,
+    'Insurance Expenses': 34,
+    'Bad debt Expenses': 35,
+    'Selling & General Expenses': 36,
+    'Other Expenses': 37,
+    'Goodwill Amortization Expense': 38,
+  };
 }

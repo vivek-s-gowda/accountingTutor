@@ -9,81 +9,85 @@ export class HelperService {
   updatedColumn: any = [];
   accountName = [
     'Select Account..',
-    'Accm. Depn',
-    'Accounts payable',
-    'Accounts receivable',
-    'Addnl. Paid in Capital',
-    'Allowance for Uncollectables or Bad debt',
-    'Bad debt Expense',
-    'Bond discount',
-    'Bond premium',
-    'Bonds payable',
     'Cash',
-    'Common stock',
-    'Depreciation Expense',
-    'Dividend/Investment income',
-    'Goodwill',
-    'Goodwill Amortization Expense',
-    'Interest expense',
+    'Accounts Receivable',
+    'Allowance for Bad Debts',
+    'Inventory',
+    'Pre Paid Asset',
+    'Intangible Assets',
+    'Other Assets',
     'Investments',
-    'Investment Income',
-    'Land',
-    'Loss',
+    'Goodwill',
     'PPE',
-    'Profit on retirement of bonds',
-    'Realized gain',
+    'Accumulated Depreciation',
+    'Accounts payable',
+    'Wages Payable',
+    'Interest Payable',
+    'Notes Payable',
+    'Deferred Revenue',
+    'Bank Loan',
+    'Bonds payable',
+    'Other Liabilities',
+    'Dividends payable',
+    'Common stock',
+    'Addnl. Paid in Capital',
+    'Treasury stock',
     'Retained Earnings',
     'Revenue',
-    'Treasury stock',
-    'Unbilled Revenue',
-    'Unearned Revenue',
-    'Unrealized Gain',
-    'Unrealized Loss',
-    'Realized loss',
-    'Gain',
-    'Dividend payables',
-    'Insurance Expense',
-    'Notes payable',
-    'Interest payable',
+    'Investment Income',
+    'Profit on Retirement of Bonds',
+    'Dividend income',
+    'CoGS',
+    'Rent Expenses',
+    'Depreciation Expenses',
+    'Wage Expenses',
+    'Interest Expenses',
+    'Insurance Expenses',
+    'Bad debt Expenses',
+    'Selling & General Expenses',
+    'Other Expenses',
+    'Goodwill Amortization Expense',
   ];
 
   typesMap: any = {
-    'Accm. Depn': 'XA',
-    'Accounts payable': 'Liability',
-    'Accounts receivable': 'Assets',
-    'Addnl. Paid in Capital': 'SHE',
-    'Allowance for Uncollectables or Bad debt': 'XA',
-    'Bad debt Expense': 'IS-Exp',
-    'Bond discount': 'XL',
-    'Bond premium': 'XL',
-    'Bonds payable': 'Liability',
     Cash: 'Assets',
-    'Common stock': 'SHE',
-    'Depreciation Expense': 'IS-Exp',
-    'Dividend/Investment income': 'IS-Rev',
-    Goodwill: 'Assets',
-    'Goodwill Amortization Expense': 'IS-Exp',
-    'Interest expense': 'IS-Exp',
+    'Accounts Receivable': 'Assets',
+    'Allowance for Bad Debts': 'XA',
+    Inventory: 'Assets',
+    'Pre Paid Asset': 'Assets',
+    'Intangible Assets': 'Assets',
+    'Other Assets': 'Assets',
     Investments: 'Assets',
-    'Investment Income': 'IS-Rev',
-    Land: 'Assets',
-    Loss: 'IS-Exp',
+    Goodwill: 'Assets',
     PPE: 'Assets',
-    'Profit on retirement of bonds': 'IS-Rev',
-    'Realized gain': 'IS-Rev',
+    'Accumulated Depreciation': 'XA',
+    'Accounts payable': 'Liability',
+    'Wages Payable': 'Liability',
+    'Interest Payable': 'Liability',
+    'Notes Payable': 'Liability',
+    'Deferred Revenue': 'Liability',
+    'Bank Loan': 'Liability',
+    'Bonds payable': 'Liability',
+    'Other Liabilities': 'Liability',
+    'Dividends payable': 'Liability',
+    'Common stock': 'SHE',
+    'Addnl. Paid in Capital': 'SHE',
+    'Treasury stock': 'XE',
     'Retained Earnings': 'SHE',
     Revenue: 'IS-Rev',
-    'Treasury stock': 'XE',
-    'Unbilled Revenue': 'Assets',
-    'Unearned Revenue': 'Liability',
-    'Unrealized Gain': 'SHE',
-    'Unrealized Loss': 'SHE',
-    'Realized loss': 'IS-Exp',
-    Gain: 'IS-Rev',
-    'Dividend payables': 'Liability',
-    'Insurance Expense': 'IS-Exp',
-    'Notes payable': 'Liability',
-    'Interest payable': 'Liability',
+    'Investment Income': 'IS-Rev',
+    'Profit on Retirement of Bonds': 'IS-Rev',
+    'Dividend income': 'IS-Rev',
+    CoGS: 'IS-Exp',
+    'Rent Expenses': 'IS-Exp',
+    'Depreciation Expenses': 'IS-Exp',
+    'Wage Expenses': 'IS-Exp',
+    'Interest Expenses': 'IS-Exp',
+    'Insurance Expenses': 'IS-Exp',
+    'Bad debt Expenses': 'IS-Exp',
+    'Selling & General Expenses': 'IS-Rev',
+    'Other Expenses': 'IS-Exp',
+    'Goodwill Amortization Expense': 'IS-Exp',
   };
 
   increaseDecrease = ['Increase', 'Decrease'];
@@ -155,7 +159,7 @@ export class HelperService {
   }
 
   getRowX(rows: any) {
-    let newRow = new Array(37).fill(0);
+    let newRow = new Array(38).fill(0);
     newRow[0] = rows[0].Transaction;
     rows.forEach((row: any) => {
       newRow[constantsX.accountName[row.selectedAccount]] =
@@ -166,7 +170,7 @@ export class HelperService {
   }
 
   getTotal(columnData: any, data: any) {
-    let totalColumn = new Array(37).fill(0);
+    let totalColumn = new Array(38).fill(0);
     columnData.forEach((column: any) => {
       let columnSum: number = 0;
       data.forEach((row: any) => {
@@ -177,43 +181,56 @@ export class HelperService {
     return this.balanceTheSheet(totalColumn);
   }
 
-  updateTotalWithContra() {
-
-  }
-
   balanceTheSheet(totalColumn: any) {
     let revenueTotal = 0;
     [
-      'Dividend/Investment income',
-      'Investment Income',
-      'Profit on retirement of bonds',
-      'Realized gain',
       'Revenue',
-      'Gain',
+      'Investment Income',
+      'Profit on Retirement of Bonds',
+      'Dividend income'
     ].forEach((cols: any) => {
       revenueTotal = revenueTotal + totalColumn[constantsX.accountName[cols]];
     });
     let expencesTotal = 0;
     [
-      'Bad debt Expense',
-      'Depreciation Expense',
-      'Goodwill Amortization Expense',
-      'Interest expense',
-      'Loss',
-      'Realized loss',
-      'Insurance Expense',
+      'CoGS',
+      'Rent Expenses',
+      'Depreciation Expenses',
+      'Wage Expenses',
+      'Interest Expenses',
+      'Insurance Expenses',
+      'Bad debt Expenses',
+      'Selling & General Expenses',
+      'Other Expenses',
+      'Goodwill Amortization Expense'
     ].forEach((cols: any) => {
       expencesTotal = expencesTotal + totalColumn[constantsX.accountName[cols]];
     });
     let retainedEarnings = Number(revenueTotal) - Number(expencesTotal);
     this.updateColumn(retainedEarnings);
 
-    totalColumn[constantsX.accountName['Retained Earnings']] = retainedEarnings;
-    totalColumn[constantsX.accountName['PPE']] = totalColumn[constantsX.accountName['PPE']] - (totalColumn[constantsX.accountName['Accm. Depn']]);
-    totalColumn[constantsX.accountName['Accounts receivable']] = totalColumn[constantsX.accountName['Accounts receivable']] - (totalColumn[constantsX.accountName['Allowance for Uncollectables or Bad debt']]);
-    totalColumn[constantsX.accountName['Bonds payable']] = totalColumn[constantsX.accountName['Bonds payable']] - (totalColumn[constantsX.accountName['Bond discount']]);
-    totalColumn[constantsX.accountName['Bonds payable']] = totalColumn[constantsX.accountName['Bonds payable']] - (totalColumn[constantsX.accountName['Bond premium']]);
-    totalColumn[constantsX.accountName['Common stock']] = totalColumn[constantsX.accountName['Common stock']] - (totalColumn[constantsX.accountName['Treasury stock']]);
+    if(retainedEarnings > 0)
+      totalColumn[constantsX.accountName['Retained Earnings']] = retainedEarnings;
+    totalColumn[constantsX.accountName['PPE']] =
+      totalColumn[constantsX.accountName['PPE']] -
+      totalColumn[constantsX.accountName['Accumulated Depreciation']];
+    totalColumn[constantsX.accountName['Accounts receivable']] =
+      totalColumn[constantsX.accountName['Accounts receivable']] -
+      totalColumn[
+        constantsX.accountName['Allowance for Bad Debts']
+      ];
+    // totalColumn[constantsX.accountName['Bonds payable']] =
+    //   totalColumn[constantsX.accountName['Bonds payable']] -
+    //   totalColumn[constantsX.accountName['Bond discount']];
+    // totalColumn[constantsX.accountName['Bonds payable']] =
+    //   totalColumn[constantsX.accountName['Bonds payable']] -
+    //   totalColumn[constantsX.accountName['Bond premium']];
+    totalColumn[constantsX.accountName['Common stock']] =
+      totalColumn[constantsX.accountName['Common stock']] -
+      totalColumn[constantsX.accountName['Treasury stock']];
+    totalColumn[constantsX.accountName['Common stock']] =
+      totalColumn[constantsX.accountName['Common stock']] -
+      totalColumn[constantsX.accountName['Retained Earnings']];
     return totalColumn;
   }
 
@@ -238,23 +255,22 @@ export class HelperService {
       !this.updatedColumn?.includes('Retained Earnings')
     ) {
       this.updatedColumn.push('Retained Earnings');
-
     }
 
-    let sortUpdatedColumns = this.updatedColumn?.map((item:any)=>{
+    let sortUpdatedColumns = this.updatedColumn?.map((item: any) => {
       return constantsX.accountName[item];
     });
     this.updatedColumn = [];
-    console.log(sortUpdatedColumns, this.updatedColumn)
+    console.log(sortUpdatedColumns, this.updatedColumn);
     sortUpdatedColumns
-    .sort((a: number, b: number) => a - b)
-    .forEach((index: number) => {
-      for (let key in constantsX.accountName) {
-        if (constantsX.accountName[key] == index) {
-          this.updatedColumn.push(key);
+      .sort((a: number, b: number) => a - b)
+      .forEach((index: number) => {
+        for (let key in constantsX.accountName) {
+          if (constantsX.accountName[key] == index) {
+            this.updatedColumn.push(key);
+          }
         }
-      }
-    });
+      });
     return this.updatedColumn;
   }
 
@@ -292,21 +308,22 @@ export class HelperService {
   getAssetsGraph(data: any) {
     let assetsGraph: any = [];
     [
-      'Accounts receivable',
       'Cash',
-      'Goodwill',
+      'Accounts Receivable',
+      'Inventory',
+      'Pre Paid Asset',
+      'Intangible Assets',
+      'Other Assets',
       'Investments',
-      'Land',
-      'PPE',
-      'Unbilled Revenue',
+      'Goodwill',
+      'PPE', 
     ].forEach((col: string) => {
       let columnSum: number = 0;
-      console.log(col, "the col details")
       columnSum = columnSum + Number(data[constantsX.accountName[col]]);
       if (columnSum != 0) {
         assetsGraph.push({
           label: col,
-          data: [columnSum,0],
+          data: [columnSum, 0],
         });
       }
     });
@@ -317,16 +334,17 @@ export class HelperService {
     let LiabilityGraph: any = [];
     [
       'Accounts payable',
+      'Wages Payable',
+      'Interest Payable',
+      'Notes Payable',
+      'Deferred Revenue',
+      'Bank Loan',
       'Bonds payable',
-      'Unearned Revenue',
-      'Dividend payables',
-      'Notes payable',
-      'Interest payable',
-      'Addnl. Paid in Capital',
+      'Other Liabilities',
+      'Dividends payable',
       'Common stock',
+      'Addnl. Paid in Capital',
       'Retained Earnings',
-      'Unrealized Gain',
-      'Unrealized Loss',
     ].forEach((col: string) => {
       let columnSum: number = 0;
       columnSum = columnSum + Number(data[constantsX.accountName[col]]);
@@ -346,12 +364,10 @@ export class HelperService {
       let columnSum: number = 0;
       if (
         [
-          'Dividend/Investment income',
-          'Investment Income',
-          'Profit on retirement of bonds',
-          'Realized gain',
           'Revenue',
-          'Gain',
+          'Investment Income',
+          'Profit on Retirement of Bonds',
+          'Dividend income',
         ].includes(column.toString())
       ) {
         data.forEach((row: any) => {
@@ -372,13 +388,16 @@ export class HelperService {
       let columnSum: number = 0;
       if (
         [
-          'Bad debt Expense',
-          'Depreciation Expense',
+          'CoGS',
+          'Rent Expenses',
+          'Depreciation Expenses',
+          'Wage Expenses',
+          'Interest Expenses',
+          'Insurance Expenses',
+          'Bad debt Expenses',
+          'Selling & General Expenses',
+          'Other Expenses',
           'Goodwill Amortization Expense',
-          'Interest expense',
-          'Loss',
-          'Realized loss',
-          'Insurance Expense',
         ].includes(column.toString())
       ) {
         data.forEach((row: any) => {
@@ -393,7 +412,7 @@ export class HelperService {
     return ExpensesGraph;
   }
   addOpeningBalance() {
-    let openingBalance = new Array(37).fill(0);
+    let openingBalance = new Array(38).fill(0);
     openingBalance[0] = 'Opening Balance';
     this.rowData.push(openingBalance);
   }
