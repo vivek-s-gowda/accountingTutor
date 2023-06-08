@@ -85,7 +85,7 @@ export class HelperService {
     'Interest Expenses': 'IS-Exp',
     'Insurance Expenses': 'IS-Exp',
     'Bad debt Expenses': 'IS-Exp',
-    'Selling & General Expenses': 'IS-Rev',
+    'Selling & General Expenses': 'IS-Exp',
     'Other Expenses': 'IS-Exp',
     'Goodwill Amortization Expense': 'IS-Exp',
   };
@@ -159,7 +159,7 @@ export class HelperService {
   }
 
   getRowX(rows: any) {
-    let newRow = new Array(38).fill(0);
+    let newRow = new Array(39).fill(0);
     newRow[0] = rows[0].Transaction;
     rows.forEach((row: any) => {
       newRow[constantsX.accountName[row.selectedAccount]] =
@@ -170,7 +170,7 @@ export class HelperService {
   }
 
   getTotal(columnData: any, data: any) {
-    let totalColumn = new Array(38).fill(0);
+    let totalColumn = new Array(39).fill(0);
     columnData.forEach((column: any) => {
       let columnSum: number = 0;
       data.forEach((row: any) => {
@@ -209,7 +209,7 @@ export class HelperService {
     let retainedEarnings = Number(revenueTotal) - Number(expencesTotal);
     this.updateColumn(retainedEarnings);
 
-    if(retainedEarnings > 0)
+    // if(retainedEarnings > 0)
       totalColumn[constantsX.accountName['Retained Earnings']] = retainedEarnings;
     totalColumn[constantsX.accountName['PPE']] =
       totalColumn[constantsX.accountName['PPE']] -
@@ -219,12 +219,6 @@ export class HelperService {
       totalColumn[
         constantsX.accountName['Allowance for Bad Debts']
       ];
-    // totalColumn[constantsX.accountName['Bonds payable']] =
-    //   totalColumn[constantsX.accountName['Bonds payable']] -
-    //   totalColumn[constantsX.accountName['Bond discount']];
-    // totalColumn[constantsX.accountName['Bonds payable']] =
-    //   totalColumn[constantsX.accountName['Bonds payable']] -
-    //   totalColumn[constantsX.accountName['Bond premium']];
     totalColumn[constantsX.accountName['Common stock']] =
       totalColumn[constantsX.accountName['Common stock']] -
       totalColumn[constantsX.accountName['Treasury stock']];
@@ -412,7 +406,7 @@ export class HelperService {
     return ExpensesGraph;
   }
   addOpeningBalance() {
-    let openingBalance = new Array(38).fill(0);
+    let openingBalance = new Array(39).fill(0);
     openingBalance[0] = 'Opening Balance';
     this.rowData.push(openingBalance);
   }
