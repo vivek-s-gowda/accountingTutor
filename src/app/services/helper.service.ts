@@ -162,10 +162,95 @@ export class HelperService {
     let newRow = new Array(39).fill(0);
     newRow[0] = rows[0].Transaction;
     rows.forEach((row: any) => {
+      let revenueTotal = 0;
+      let expencesTotal = 0;
       newRow[constantsX.accountName[row.selectedAccount]] =
         row[row.selectedAccount];
+        
+        // if([
+        //   'Revenue',
+        //   'Investment Income',
+        //   'Profit on Retirement of Bonds',
+        //   'Dividend income',
+        // ].includes(row.selectedAccount)) {
+        //   revenueTotal = revenueTotal + row[row.selectedAccount]
+        // }
+        // if([
+        //   'CoGS',
+        //   'Rent Expenses',
+        //   'Depreciation Expenses',
+        //   'Wage Expenses',
+        //   'Interest Expenses',
+        //   'Insurance Expenses',
+        //   'Bad debt Expenses',
+        //   'Selling & General Expenses',
+        //   'Other Expenses',
+        //   'Goodwill Amortization Expense',
+        // ].includes(row.selectedAccount)) {
+        //   expencesTotal = expencesTotal + row[row.selectedAccount]
+        // }
+
+        // let retainedEarnings = Number(revenueTotal) - Number(expencesTotal);
+        // this.updateColumn(retainedEarnings);
+        // if(retainedEarnings != 0) {
+        //   newRow[constantsX.accountName['Retained Earnings']] = retainedEarnings;
+        // }
     });
+    console.log(newRow,"the new row s");
+    let revenueTotal = 0;
+    let expencesTotal = 0;
+    [
+      'Revenue',
+      'Investment Income',
+      'Profit on Retirement of Bonds',
+      'Dividend income',
+    ].forEach((col:string)=>{
+      if(Number(newRow[constantsX.accountName[col]]) != 0) {
+        revenueTotal = revenueTotal + Number(newRow[constantsX.accountName[col]]);
+      }
+    });
+
+    [
+      'CoGS',
+      'Rent Expenses',
+      'Depreciation Expenses',
+      'Wage Expenses',
+      'Interest Expenses',
+      'Insurance Expenses',
+      'Bad debt Expenses',
+      'Selling & General Expenses',
+      'Other Expenses',
+      'Goodwill Amortization Expense',
+    ].forEach((col:string)=>{
+      if(Number(newRow[constantsX.accountName[col]]) != 0) {
+        expencesTotal = expencesTotal + Number(newRow[constantsX.accountName[col]]);
+      }
+    })
+
+    let retainedEarnings = Number(revenueTotal) - Number(expencesTotal);
+    this.updateColumn(retainedEarnings);
+    if(retainedEarnings != 0) {
+      newRow[constantsX.accountName['Retained Earnings']] = retainedEarnings;
+    }
+
     this.rowData.push(newRow);
+    // console.log(this.rowData);
+    // this.rowData.forEach((eachRow:any) => {
+    //   eachRow.forEach((data:any)=>{
+    //     [
+    //       'CoGS',
+    //       'Rent Expenses',
+    //       'Depreciation Expenses',
+    //       'Wage Expenses',
+    //       'Interest Expenses',
+    //       'Insurance Expenses',
+    //       'Bad debt Expenses',
+    //       'Selling & General Expenses',
+    //       'Other Expenses',
+    //       'Goodwill Amortization Expense',
+    //     ]
+    //   })
+    // })
     return this.rowData;
   }
 
@@ -182,35 +267,35 @@ export class HelperService {
   }
 
   balanceTheSheet(totalColumn: any) {
-    let revenueTotal = 0;
-    [
-      'Revenue',
-      'Investment Income',
-      'Profit on Retirement of Bonds',
-      'Dividend income',
-    ].forEach((cols: any) => {
-      revenueTotal = revenueTotal + totalColumn[constantsX.accountName[cols]];
-    });
-    let expencesTotal = 0;
-    [
-      'CoGS',
-      'Rent Expenses',
-      'Depreciation Expenses',
-      'Wage Expenses',
-      'Interest Expenses',
-      'Insurance Expenses',
-      'Bad debt Expenses',
-      'Selling & General Expenses',
-      'Other Expenses',
-      'Goodwill Amortization Expense',
-    ].forEach((cols: any) => {
-      expencesTotal = expencesTotal + totalColumn[constantsX.accountName[cols]];
-    });
-    let retainedEarnings = Number(revenueTotal) - Number(expencesTotal);
-    this.updateColumn(retainedEarnings);
+    // let revenueTotal = 0;
+    // [
+    //   'Revenue',
+    //   'Investment Income',
+    //   'Profit on Retirement of Bonds',
+    //   'Dividend income',
+    // ].forEach((cols: any) => {
+    //   revenueTotal = revenueTotal + totalColumn[constantsX.accountName[cols]];
+    // });
+    // let expencesTotal = 0;
+    // [
+    //   'CoGS',
+    //   'Rent Expenses',
+    //   'Depreciation Expenses',
+    //   'Wage Expenses',
+    //   'Interest Expenses',
+    //   'Insurance Expenses',
+    //   'Bad debt Expenses',
+    //   'Selling & General Expenses',
+    //   'Other Expenses',
+    //   'Goodwill Amortization Expense',
+    // ].forEach((cols: any) => {
+    //   expencesTotal = expencesTotal + totalColumn[constantsX.accountName[cols]];
+    // });
+    // let retainedEarnings = Number(revenueTotal) - Number(expencesTotal);
+    // this.updateColumn(retainedEarnings);
 
     // if(retainedEarnings > 0)
-    totalColumn[constantsX.accountName['Retained Earnings']] = retainedEarnings;
+    // totalColumn[constantsX.accountName['Retained Earnings']] = retainedEarnings;
     totalColumn[constantsX.accountName['PPE']] =
       totalColumn[constantsX.accountName['PPE']] -
       totalColumn[constantsX.accountName['Accumulated Depreciation']];
