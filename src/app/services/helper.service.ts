@@ -299,9 +299,11 @@ export class HelperService {
     totalColumn[constantsX.accountName['PPE']] =
       totalColumn[constantsX.accountName['PPE']] -
       totalColumn[constantsX.accountName['Accumulated Depreciation']];
-    totalColumn[constantsX.accountName['Accounts receivable']] =
-      totalColumn[constantsX.accountName['Accounts receivable']] -
+    totalColumn[constantsX.accountName['Accounts Receivable']] =
+      totalColumn[constantsX.accountName['Accounts Receivable']] -
       totalColumn[constantsX.accountName['Allowance for Bad Debts']];
+      console.log(totalColumn[constantsX.accountName['Allowance for Bad Debts']], "Allowance for Bad Debts" )
+      console.log(totalColumn[constantsX.accountName['Accounts Receivable']], 'Accounts receivable')
     totalColumn[constantsX.accountName['Common stock']] =
       totalColumn[constantsX.accountName['Common stock']] -
       totalColumn[constantsX.accountName['Treasury stock']];
