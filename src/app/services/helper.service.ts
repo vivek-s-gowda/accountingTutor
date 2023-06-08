@@ -187,7 +187,7 @@ export class HelperService {
       'Revenue',
       'Investment Income',
       'Profit on Retirement of Bonds',
-      'Dividend income'
+      'Dividend income',
     ].forEach((cols: any) => {
       revenueTotal = revenueTotal + totalColumn[constantsX.accountName[cols]];
     });
@@ -202,7 +202,7 @@ export class HelperService {
       'Bad debt Expenses',
       'Selling & General Expenses',
       'Other Expenses',
-      'Goodwill Amortization Expense'
+      'Goodwill Amortization Expense',
     ].forEach((cols: any) => {
       expencesTotal = expencesTotal + totalColumn[constantsX.accountName[cols]];
     });
@@ -210,21 +210,25 @@ export class HelperService {
     this.updateColumn(retainedEarnings);
 
     // if(retainedEarnings > 0)
-      totalColumn[constantsX.accountName['Retained Earnings']] = retainedEarnings;
+    totalColumn[constantsX.accountName['Retained Earnings']] = retainedEarnings;
     totalColumn[constantsX.accountName['PPE']] =
       totalColumn[constantsX.accountName['PPE']] -
       totalColumn[constantsX.accountName['Accumulated Depreciation']];
     totalColumn[constantsX.accountName['Accounts receivable']] =
       totalColumn[constantsX.accountName['Accounts receivable']] -
-      totalColumn[
-        constantsX.accountName['Allowance for Bad Debts']
-      ];
+      totalColumn[constantsX.accountName['Allowance for Bad Debts']];
     totalColumn[constantsX.accountName['Common stock']] =
       totalColumn[constantsX.accountName['Common stock']] -
       totalColumn[constantsX.accountName['Treasury stock']];
-    totalColumn[constantsX.accountName['Common stock']] =
-      totalColumn[constantsX.accountName['Common stock']] -
-      totalColumn[constantsX.accountName['Retained Earnings']];
+      // Special case where retained earnigs less than 0 or negative
+
+    if (totalColumn[constantsX.accountName['Retained Earnings']] < 0) {
+      totalColumn[constantsX.accountName['Common stock']] =
+        totalColumn[constantsX.accountName['Common stock']] +
+        totalColumn[constantsX.accountName['Retained Earnings']];
+    }
+
+    // console.log(totalColumn[constantsX.accountName['Retained Earnings']] ,totalColumn[constantsX.accountName['Common stock']] )
     return totalColumn;
   }
 
@@ -310,7 +314,7 @@ export class HelperService {
       'Other Assets',
       'Investments',
       'Goodwill',
-      'PPE', 
+      'PPE',
     ].forEach((col: string) => {
       let columnSum: number = 0;
       columnSum = columnSum + Number(data[constantsX.accountName[col]]);
