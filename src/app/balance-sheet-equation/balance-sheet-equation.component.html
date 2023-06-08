@@ -50,13 +50,14 @@
             <th scope="col" class="border-right border border-light">
               Account
             </th>
-            <th scope="col" class="border-right border border-light"></th>
             <th scope="col" class="border-right border border-light">
-              Increased
+              +/-
             </th>
             <th scope="col" class="border-right border border-light">Amount</th>
+
+            <th scope="col" class="border-right border border-light">Type</th>
             <th scope="col" class="border-left border-light">
-              <!-- Debit/Credit -->
+              Dr/Cr
             </th>
             <th scope="col" class="border-right border-light"></th>
           </tr>
@@ -75,11 +76,8 @@
               </select>
             </td>
             <td>
-              {{ row.selectedType }}
-            </td>
-            <td>
               <select
-                style="width: 100%"
+                style="width: 150px"
                 (change)="
                   increaseDecreaseChange(i);
                   showError = false;
@@ -104,6 +102,9 @@
                 (input)="showError = false; errorMessage = ''"
               />
             </td>
+            <td>
+              {{ row.selectedType }}
+            </td>
             <td style="width: 60px">{{ row.debitCredit }}</td>
             <td>
               <button
@@ -115,8 +116,8 @@
           </tr>
         </table>
 
-        <div class="button-area">
-          <button (click)="addRow()">Add Row</button>
+        <div class="button-area btn-secondary">
+          <button (click)="addRow()" class="btn-grey-add-new">Add Row</button>
 
           <div class="text-center text-danger">
             <span *ngIf="showError"> {{ errorMessage }}</span>
