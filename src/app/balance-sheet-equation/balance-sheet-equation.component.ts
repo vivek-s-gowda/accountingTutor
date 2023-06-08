@@ -207,11 +207,9 @@ export class BalanceSheetEquationComponent implements OnInit {
       .forEach((liabilityGraph: any) => {
         this.barChartDataAssets = [...this.barChartDataAssets, liabilityGraph];
       });
-    this.helperService
-      .getAssetsGraph(this.total)
-      .forEach((assetGraph: any) => {
-        this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
-      });
+    this.helperService.getAssetsGraph(this.total).forEach((assetGraph: any) => {
+      this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
+    });
 
     this.helperService
       .getRevenueGraph(this.columns, this.gridRows)
@@ -256,11 +254,9 @@ export class BalanceSheetEquationComponent implements OnInit {
       .forEach((liabilityGraph: any) => {
         this.barChartDataAssets = [...this.barChartDataAssets, liabilityGraph];
       });
-    this.helperService
-      .getAssetsGraph(this.total)
-      .forEach((assetGraph: any) => {
-        this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
-      });
+    this.helperService.getAssetsGraph(this.total).forEach((assetGraph: any) => {
+      this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
+    });
     this.helperService
       .getRevenueGraph(this.columns, this.gridRows)
       .forEach((RevenueGraph: any) => {
@@ -335,11 +331,9 @@ export class BalanceSheetEquationComponent implements OnInit {
       .forEach((liabilityGraph: any) => {
         this.barChartDataAssets = [...this.barChartDataAssets, liabilityGraph];
       });
-    this.helperService
-      .getAssetsGraph(this.total)
-      .forEach((assetGraph: any) => {
-        this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
-      });
+    this.helperService.getAssetsGraph(this.total).forEach((assetGraph: any) => {
+      this.barChartDataAssets = [...this.barChartDataAssets, assetGraph];
+    });
     this.helperService
       .getRevenueGraph(this.columns, this.gridRows)
       .forEach((RevenueGraph: any) => {
@@ -350,5 +344,102 @@ export class BalanceSheetEquationComponent implements OnInit {
       .forEach((expensesGraph: any) => {
         this.barChartDataRevenue = [...this.barChartDataRevenue, expensesGraph];
       });
+  }
+
+  getCellClass(columnName: string) {
+    let assetList = [
+      'Cash',
+      'Accounts Receivable',
+      'Allowance for Bad Debts',
+      'Inventory',
+      'Pre Paid Asset',
+      'Intangible Assets',
+      'Other Assets',
+      'Investments',
+      'Goodwill',
+      'PPE',
+      'Accumulated Depreciation',
+    ];
+
+    let LiabilityList = [
+      'Accounts payable',
+      'Wages Payable',
+      'Interest Payable',
+      'Notes Payable',
+      'Deferred Revenue',
+      'Bank Loan',
+      'Bonds payable',
+      'Other Liabilities',
+      'Dividends payable',
+    ];
+
+    let equityList = [
+      'Common stock',
+      'Addnl. Paid in Capital',
+      'Treasury stock',
+      'Retained Earnings',
+    ];
+
+    let RevenueList = [
+      'Revenue',
+      'Investment Income',
+      'Profit on Retirement of Bonds',
+      'Dividend income',
+    ];
+
+    let expensesList = [
+      'CoGS',
+      'Rent Expenses',
+      'Depreciation Expenses',
+      'Wage Expenses',
+      'Interest Expenses',
+      'Insurance Expenses',
+      'Bad debt Expenses',
+      'Selling & General Expenses',
+      'Other Expenses',
+      'Goodwill Amortization Expense',
+    ];
+
+    if(assetList.includes(columnName)) {
+      return {
+        display : 'block',
+        width : '100%',
+        background : '#EDF5E6'
+      }
+    }
+
+    if(LiabilityList.includes(columnName)) {
+      return {
+        display : 'block',
+        width : '100%',
+        background : '#E6F3F5'
+      }
+    }
+
+    if(equityList.includes(columnName)) {
+      return {
+        display : 'block',
+        width : '100%',
+        background : '#EDEBFA'
+      }
+    }
+
+    if(RevenueList.includes(columnName)) {
+      return {
+        display : 'block',
+        width : '100%',
+        background : '#F5EAE6'
+      }
+    }
+
+    if(expensesList.includes(columnName)) {
+      return {
+        display : 'block',
+        width : '100%',
+        background : '#F5F0E6'
+      }
+    }
+
+    return;
   }
 }

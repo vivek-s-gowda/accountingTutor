@@ -278,19 +278,22 @@
       </div>
     </div>
     <br />
-    <table *ngIf="showGrid" class="table table-bordered">
+
+
+    <!-- Total grid  -->
+
+    <table *ngIf="showGrid" class="table table-bordered border-light">
       <tr>
         <th
-          class="border-right border border-primary"
           *ngFor="let row of columns; index as i"
         >
-          {{ row }}
+          <span [ngStyle]="getCellClass(row)">{{ row }}</span>
         </th>
         <th></th>
       </tr>
       <tr *ngFor="let row of gridRows; index as k">
         <td *ngFor="let y of columns; index as i">
-          {{ getAccountNameIndexAndValue(row, y) }}
+          <span [ngStyle]="getCellClass(y)">{{ getAccountNameIndexAndValue(row, y) }}</span>
         </td>
         <td>
           <button (click)="removeDetailRow(k)">X</button>
@@ -298,40 +301,13 @@
       </tr>
       <tr>
         <td *ngFor="let y of columns; index as i">
-          {{ getTotalValue(total, i, y) }}
+          <span [ngStyle]="getCellClass(y)">{{ getTotalValue(total, i, y) }}</span>
         </td>
       </tr>
     </table>
     <br />
+
+    <!-- Grid end -->
+
   </div>
-
-  <!-- <div class="graphContainer">
-    <div class="balance-sheet">
-      <div style="display: block">
-        <canvas
-          baseChart
-          [datasets]="barChartDataAssets"
-          [labels]="barChartLabelsAssets"
-          [options]="barChartOptionsAssets"
-          [legend]="barChartLegendAssets"
-          style="height: 400px; width: 300px; margin-left: 20px"
-        >
-        </canvas>
-      </div>
-    </div>
-    <div class="balance-sheet">
-      <div style="display: block">
-        <canvas
-          baseChart
-          [datasets]="barChartDataRevenue"
-          [labels]="barChartLabelsRevenue"
-          [options]="barChartOptionsRevenue"
-          [legend]="barChartLegendRevenue"
-          style="height: 400px; width: 300px; margin-left: 20px"
-        >
-        </canvas>
-      </div>
-    </div>
-  </div> -->
-
 </div>
