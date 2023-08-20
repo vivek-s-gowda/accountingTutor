@@ -6,28 +6,7 @@
     <div class="tagline">Visualising the Balance Sheet & Income Statement</div>
     <div class="graph-and-input-area">
 
-      <!-- <div class="opening-balance">
-        <div class="opening-balance-title">Opening Balance</div>
 
-        <label for="accountSelector">Account</label>
-        <select class="" [(ngModel)]="updatedOpeningBalanceAccountName">
-          <option
-            *ngFor="let account of updetedOpeningList"
-            [ngValue]="account"
-          >
-            {{ account }}
-          </option>
-        </select>
-
-        <label>Amount</label>
-        <input
-          type="text"
-          [(ngModel)]="updatedOpeningBalanceAccountValue"
-        />
-
-
-        <button (click)="updateOpeningBalance()">Update</button>
-      </div> -->
 
       <div class="transcation-details">
         <div class="transtaction-title">Transaction Details</div>
@@ -159,6 +138,28 @@
       </div>
     </div>
 
+    <div class="opening-balance">
+      <div class="opening-balance-title">Opening Balance</div>
+
+      <label for="accountSelector">Account</label>
+      <select class="" [(ngModel)]="updatedOpeningBalanceAccountName">
+        <option
+          *ngFor="let account of updetedOpeningList"
+          [ngValue]="account"
+        >
+          {{ account }}
+        </option>
+      </select>
+
+      <label>Amount</label>
+      <input
+        type="text"
+        [(ngModel)]="updatedOpeningBalanceAccountValue"
+      />
+
+
+      <button (click)="updateOpeningBalance()">Update</button>
+    </div>
     <!-- -------------------------- -->
     <!-- <div class="transaction-input">
       <label for="transaction">Transaction : </label>

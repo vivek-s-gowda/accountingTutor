@@ -244,7 +244,7 @@ export class BalanceSheetEquationComponent implements OnInit {
     this.resultGrid.push(this.rows);
 
     this.columns = this.helperService.mergeColumns(this.resultGrid);
-    this.gridRows = this.helperService.getRowX(this.rows);
+    this.gridRows = this.helperService.getRowX(this.rows,false);
     this.total = this.helperService.getTotal(this.columns, this.gridRows);
     this.columns = this.helperService.getUpdateColumn();
     // this.columns = this.helperService.mergeColumns(this.resultGrid);
@@ -321,10 +321,28 @@ export class BalanceSheetEquationComponent implements OnInit {
     this.barChartDataAssets = [];
     this.barChartDataRevenue = [];
     console.log('the opening balance ', this.gridRows[0]);
+    if (!this.columns.includes(this.updatedOpeningBalanceAccountName)) {
+      this.columns.push(this.updatedOpeningBalanceAccountName);
+      this.gridRows = this.helperService.getRowX([
+        {
+          names: this.helperService.getAccountNames(),
+          selectedAccount: this.updatedOpeningBalanceAccountName,
+          selectedType: 'XA',
+          increaseDecrease: this.helperService.getIncreaseDecrease(),
+          selectedIncreaseDecrease: 'Increase',
+          amount: 0,
+          'Accm. Depn': 0,
+          debitCredit: 'Credit',
+          Transaction: '',
+        },
+      ],true);
+      this.total = this.helperService.getTotal(this.columns, this.gridRows);
+      this.columns = this.helperService.getUpdateColumn();
+    }
     this.gridRows[0][
       constantsX.accountName[this.updatedOpeningBalanceAccountName]
     ] = this.updatedOpeningBalanceAccountValue;
-    this.total = this.helperService.getTotal(this.columns, this.gridRows); /// need to work
+    this.total = this.helperService.getTotal(this.columns, this.gridRows);
 
     this.helperService
       .getLiabilityGraph(this.total)
@@ -400,44 +418,44 @@ export class BalanceSheetEquationComponent implements OnInit {
       'Goodwill Amortization Expense',
     ];
 
-    if(assetList.includes(columnName)) {
+    if (assetList.includes(columnName)) {
       return {
-        display : 'block',
-        width : '100%',
-        background : '#EDF5E6'
-      }
+        display: 'block',
+        width: '100%',
+        background: '#EDF5E6',
+      };
     }
 
-    if(LiabilityList.includes(columnName)) {
+    if (LiabilityList.includes(columnName)) {
       return {
-        display : 'block',
-        width : '100%',
-        background : '#E6F3F5'
-      }
+        display: 'block',
+        width: '100%',
+        background: '#E6F3F5',
+      };
     }
 
-    if(equityList.includes(columnName)) {
+    if (equityList.includes(columnName)) {
       return {
-        display : 'block',
-        width : '100%',
-        background : '#EDEBFA'
-      }
+        display: 'block',
+        width: '100%',
+        background: '#EDEBFA',
+      };
     }
 
-    if(RevenueList.includes(columnName)) {
+    if (RevenueList.includes(columnName)) {
       return {
-        display : 'block',
-        width : '100%',
-        background : '#F5EAE6'
-      }
+        display: 'block',
+        width: '100%',
+        background: '#F5EAE6',
+      };
     }
 
-    if(expensesList.includes(columnName)) {
+    if (expensesList.includes(columnName)) {
       return {
-        display : 'block',
-        width : '100%',
-        background : '#F5F0E6'
-      }
+        display: 'block',
+        width: '100%',
+        background: '#F5F0E6',
+      };
     }
 
     return;
