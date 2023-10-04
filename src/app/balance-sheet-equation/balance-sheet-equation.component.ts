@@ -243,9 +243,12 @@ export class BalanceSheetEquationComponent implements OnInit {
     this.rows.map((row: any) => (row.Transaction = this.transaction));
     this.resultGrid.push(this.rows);
 
-    this.columns = this.helperService.mergeColumns(this.resultGrid);
-    this.gridRows = this.helperService.getRowX(this.rows,false);
+    this.columns = [...this.columns,this.helperService.mergeColumns(this.resultGrid)];
+    this.gridRows = this.helperService.getRowX(this.rows, false);
     this.total = this.helperService.getTotal(this.columns, this.gridRows);
+    console.log(this.columns,"the total ")
+    console.log(this.total,"the total ")
+    console.log(this.columns,"the total ")
     this.columns = this.helperService.getUpdateColumn();
     // this.columns = this.helperService.mergeColumns(this.resultGrid);
 
@@ -320,29 +323,46 @@ export class BalanceSheetEquationComponent implements OnInit {
   updateOpeningBalance() {
     this.barChartDataAssets = [];
     this.barChartDataRevenue = [];
-    console.log('the opening balance ', this.gridRows[0]);
+    console.log(
+      'the opening balance ',
+      this.updatedOpeningBalanceAccountName,
+      this.updatedOpeningBalanceAccountValue
+    );
     if (!this.columns.includes(this.updatedOpeningBalanceAccountName)) {
+      if (!this.columns.includes('Transaction'))
+        this.columns.push('Transaction');
       this.columns.push(this.updatedOpeningBalanceAccountName);
-      this.gridRows = this.helperService.getRowX([
-        {
-          names: this.helperService.getAccountNames(),
-          selectedAccount: this.updatedOpeningBalanceAccountName,
-          selectedType: 'XA',
-          increaseDecrease: this.helperService.getIncreaseDecrease(),
-          selectedIncreaseDecrease: 'Increase',
-          amount: 0,
-          'Accm. Depn': 0,
-          debitCredit: 'Credit',
-          Transaction: '',
-        },
-      ],true);
-      this.total = this.helperService.getTotal(this.columns, this.gridRows);
-      this.columns = this.helperService.getUpdateColumn();
+      this.gridRows = this.helperService.getRowX(
+        [
+          {
+            names: this.helperService.getAccountNames(),
+            selectedAccount: this.updatedOpeningBalanceAccountName,
+            selectedType: 'XA',
+            increaseDecrease: this.helperService.getIncreaseDecrease(),
+            selectedIncreaseDecrease: 'Increase',
+            amount: 0,
+            'Accm. Depn': 0,
+            debitCredit: 'Credit',
+            Transaction: '',
+          },
+        ],
+        true
+      );
+      // this.total = this.helperService.getTotal(this.columns, this.gridRows);
+      // this.columns = this.helperService.getUpdateColumn();
+
+      console.log(this.total, 'before');
     }
+
+    console.log(this.gridRows);
+    this.gridRows[0][constantsX.accountName['Transaction']] = 'Opening Balance';
     this.gridRows[0][
       constantsX.accountName[this.updatedOpeningBalanceAccountName]
-    ] = this.updatedOpeningBalanceAccountValue;
+    ] = parseInt(this.updatedOpeningBalanceAccountValue);
     this.total = this.helperService.getTotal(this.columns, this.gridRows);
+    // this.columns = this.helperService.getUpdateColumn();
+
+    console.log(this.total, 'after');
 
     this.helperService
       .getLiabilityGraph(this.total)
@@ -362,6 +382,9 @@ export class BalanceSheetEquationComponent implements OnInit {
       .forEach((expensesGraph: any) => {
         this.barChartDataRevenue = [...this.barChartDataRevenue, expensesGraph];
       });
+
+    this.showGrid = true;
+    console.log(this.columns, 'columns');
   }
 
   getCellClass(columnName: string) {

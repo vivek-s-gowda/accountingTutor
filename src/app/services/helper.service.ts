@@ -167,7 +167,6 @@ export class HelperService {
       newRow[constantsX.accountName[row.selectedAccount]] =
         row[row.selectedAccount];
     });
-    console.log(newRow,"the new row s");
     let revenueTotal = 0;
     let expencesTotal = 0;
     [
@@ -175,9 +174,10 @@ export class HelperService {
       'Investment Income',
       'Profit on Retirement of Bonds',
       'Dividend income',
-    ].forEach((col:string)=>{
-      if(Number(newRow[constantsX.accountName[col]]) != 0) {
-        revenueTotal = revenueTotal + Number(newRow[constantsX.accountName[col]]);
+    ].forEach((col: string) => {
+      if (Number(newRow[constantsX.accountName[col]]) != 0) {
+        revenueTotal =
+          revenueTotal + Number(newRow[constantsX.accountName[col]]);
       }
     });
 
@@ -192,32 +192,49 @@ export class HelperService {
       'Selling & General Expenses',
       'Other Expenses',
       'Goodwill Amortization Expense',
-    ].forEach((col:string)=>{
-      if(Number(newRow[constantsX.accountName[col]]) != 0) {
-        expencesTotal = expencesTotal + Number(newRow[constantsX.accountName[col]]);
+    ].forEach((col: string) => {
+      if (Number(newRow[constantsX.accountName[col]]) != 0) {
+        expencesTotal =
+          expencesTotal + Number(newRow[constantsX.accountName[col]]);
       }
-    })
+    });
 
     let retainedEarnings = Number(revenueTotal) - Number(expencesTotal);
     this.updateColumn(retainedEarnings);
-    if(retainedEarnings != 0) {
+    if (retainedEarnings != 0) {
       newRow[constantsX.accountName['Retained Earnings']] = retainedEarnings;
     }
 
-    if(!update)
-      this.rowData.push(newRow);
+    if (!update) this.rowData.push(newRow);
     return this.rowData;
   }
 
   getTotal(columnData: any, data: any) {
     let totalColumn = new Array(39).fill(0);
-    columnData.forEach((column: any) => {
-      let columnSum: number = 0;
-      data.forEach((row: any) => {
-        columnSum = columnSum + Number(row[constantsX.accountName[column]]);
+    if (typeof columnData[0] != 'string') {
+      columnData[0].forEach((column: any) => {
+        let columnSum: number = 0;
+        data.forEach((row: any) => {
+          console.log('-------', row, column);
+          columnSum = columnSum + Number(row[constantsX.accountName[column]]);
+          console.log(columnSum, '----', column);
+        });
+        totalColumn[constantsX.accountName[column]] = columnSum;
       });
-      totalColumn[constantsX.accountName[column]] = columnSum;
-    });
+    }
+    else{
+      columnData.forEach((column: any) => {
+        let columnSum: number = 0;
+        data.forEach((row: any) => {
+          console.log('-------', row, column);
+          columnSum = columnSum + Number(row[constantsX.accountName[column]]);
+          console.log(columnSum, '----', column);
+        });
+        totalColumn[constantsX.accountName[column]] = columnSum;
+      });
+    }
+
+    console.log(totalColumn, 'totalColumn');
     return this.balanceTheSheet(totalColumn);
   }
 
@@ -228,12 +245,10 @@ export class HelperService {
     totalColumn[constantsX.accountName['Accounts Receivable']] =
       totalColumn[constantsX.accountName['Accounts Receivable']] -
       totalColumn[constantsX.accountName['Allowance for Bad Debts']];
-      console.log(totalColumn[constantsX.accountName['Allowance for Bad Debts']], "Allowance for Bad Debts" )
-      console.log(totalColumn[constantsX.accountName['Accounts Receivable']], 'Accounts receivable')
-    totalColumn[constantsX.accountName['Common stock']] =
-      totalColumn[constantsX.accountName['Common stock']] -
+    totalColumn[constantsX.accountName['Common stock']];
+    totalColumn[constantsX.accountName['Common stock']] -
       totalColumn[constantsX.accountName['Treasury stock']];
-      // Special case where retained earnigs less than 0 or negative
+    // Special case where retained earnigs less than 0 or negative
 
     if (totalColumn[constantsX.accountName['Retained Earnings']] < 0) {
       totalColumn[constantsX.accountName['Common stock']] =
