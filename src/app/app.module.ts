@@ -9,21 +9,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BalanceSheetEquationComponent } from './balance-sheet-equation/balance-sheet-equation.component';
 import { IndexComponent } from './index/index.component';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    BalanceSheetEquationComponent,
-    IndexComponent
-  ],
+  declarations: [AppComponent, BalanceSheetEquationComponent, IndexComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     NgChartsModule,
-    NgbModule
+    NgbModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

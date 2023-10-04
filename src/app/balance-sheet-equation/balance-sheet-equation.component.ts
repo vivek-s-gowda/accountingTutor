@@ -19,6 +19,7 @@ export class BalanceSheetEquationComponent implements OnInit {
   updetedOpeningList: any = this.helperService.getAccountNames();
   isUpdateOpeningBalance: boolean = false;
   updatedOpeningBalanceAccountValue: string = '';
+  selectView = 'summary';
   rows: any = [
     {
       names: this.helperService.getAccountNames(),
@@ -57,6 +58,9 @@ export class BalanceSheetEquationComponent implements OnInit {
     scales: {
       x: {
         stacked: true,
+        ticks: {
+          color: 'red',
+        },
       },
       y: {
         stacked: true,
@@ -87,7 +91,7 @@ export class BalanceSheetEquationComponent implements OnInit {
       },
     },
   };
-  public barChartLabelsAssets = ['Assets', 'Liability'];
+  public barChartLabelsAssets = ['ASSETS', 'LIABILITY + EQUITY'];
   public barChartTypeAssets = 'bar';
   public barChartLegendAssets = true;
   public barChartDataAssets: any = [];
@@ -111,7 +115,7 @@ export class BalanceSheetEquationComponent implements OnInit {
       },
     },
   };
-  public barChartLabelsRevenue = ['Revenue', 'Expenses'];
+  public barChartLabelsRevenue = ['REVENUE', 'EXPENSES + INCOME'];
   public barChartTypeRevenue = 'bar';
   public barChartLegendRevenue = true;
   public barChartDataRevenue: any = [];
@@ -243,12 +247,15 @@ export class BalanceSheetEquationComponent implements OnInit {
     this.rows.map((row: any) => (row.Transaction = this.transaction));
     this.resultGrid.push(this.rows);
 
-    this.columns = [...this.columns,this.helperService.mergeColumns(this.resultGrid)];
+    this.columns = [
+      ...this.columns,
+      this.helperService.mergeColumns(this.resultGrid),
+    ];
     this.gridRows = this.helperService.getRowX(this.rows, false);
     this.total = this.helperService.getTotal(this.columns, this.gridRows);
-    console.log(this.columns,"the total ")
-    console.log(this.total,"the total ")
-    console.log(this.columns,"the total ")
+    console.log(this.columns, 'the total ');
+    console.log(this.total, 'the total ');
+    console.log(this.columns, 'the total ');
     this.columns = this.helperService.getUpdateColumn();
     // this.columns = this.helperService.mergeColumns(this.resultGrid);
 
@@ -482,5 +489,9 @@ export class BalanceSheetEquationComponent implements OnInit {
     }
 
     return;
+  }
+
+  switch(view: string) {
+    this.selectView = view;
   }
 }

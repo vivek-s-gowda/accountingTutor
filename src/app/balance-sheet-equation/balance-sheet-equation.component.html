@@ -4,103 +4,128 @@
     <div class="heading">Balance Sheet Equation</div>
     <div class="tagline">Visualising the Balance Sheet & Income Statement</div>
     <div class="graph-and-input-area">
+      <div class="transaction-opening">
+        <div class="transcation-details">
+          <div class="transtaction-title">Transaction Details</div>
+          <label for="transaction" class="transaction-input-lable">Name </label>
+          <input
+            class="name-input"
+            type="text"
+            name="transaction"
+            id="transaction"
+            [(ngModel)]="transaction"
+            (input)="
+              showError = false;
+              errorMessage = '';
+              transaction == '' ? (showError = true) : (showError = false)
+            "
+          />
 
+          <table class="table table-bordered" style="display: block">
+            <tr class="top-table-head" *ngIf="rows.length">
+              <th scope="col" class="border-right border border-light">
+                Account
+              </th>
+              <th scope="col" class="border-right border border-light">+/-</th>
+              <th scope="col" class="border-right border border-light">
+                Amount
+              </th>
 
-
-      <div class="transcation-details">
-        <div class="transtaction-title">Transaction Details</div>
-        <label for="transaction" class="transaction-input-lable">Name </label>
-        <input
-          class="name-input"
-          type="text"
-          name="transaction"
-          id="transaction"
-          [(ngModel)]="transaction"
-          (input)="
-            showError = false;
-            errorMessage = '';
-            transaction == '' ? (showError = true) : (showError = false)
-          "
-        />
-
-        <table class="table table-bordered" style="display: block">
-          <tr>
-            <th scope="col" class="border-right border border-light">
-              Account
-            </th>
-            <th scope="col" class="border-right border border-light">
-              +/-
-            </th>
-            <th scope="col" class="border-right border border-light">Amount</th>
-
-            <th scope="col" class="border-right border border-light">Type</th>
-            <th scope="col" class="border-left border-light">
-              Dr/Cr
-            </th>
-            <th scope="col" class="border-right border-light"></th>
-          </tr>
-          <tr *ngFor="let row of rows; index as i">
-            <td>
-              <select
-                style="width: 100%"
-                (change)="
-                  accountChanges(i); showError = false; errorMessage = ''
-                "
-                [(ngModel)]="row.selectedAccount"
-              >
-                <option *ngFor="let account of row.names" [ngValue]="account">
-                  {{ account }}
-                </option>
-              </select>
-            </td>
-            <td>
-              <select
-                style="width: 150px"
-                (change)="
-                  increaseDecreaseChange(i);
-                  showError = false;
-                  errorMessage = ''
-                "
-                [(ngModel)]="row.selectedIncreaseDecrease"
-              >
-                <option
-                  *ngFor="let increaseDecrease of row.increaseDecrease"
-                  [ngValue]="increaseDecrease"
+              <th scope="col" class="border-right border border-light">Type</th>
+              <th scope="col" class="border-left border-light">Dr/Cr</th>
+              <th scope="col" class="border-right border-light"></th>
+            </tr>
+            <tr *ngFor="let row of rows; index as i" class="table-head">
+              <td>
+                <select
+                  style="width: 100%"
+                  (change)="
+                    accountChanges(i); showError = false; errorMessage = ''
+                  "
+                  [(ngModel)]="row.selectedAccount"
+                  class="table-head"
                 >
-                  {{ increaseDecrease }}
-                </option>
-              </select>
-            </td>
-            <td>
-              <input
-                type="text"
-                style="width: 100%"
-                [(ngModel)]="row.amount"
-                (change)="onAmountChange(i)"
-                (input)="showError = false; errorMessage = ''"
-              />
-            </td>
-            <td>
-              {{ row.selectedType }}
-            </td>
-            <td style="width: 60px">{{ row.debitCredit }}</td>
-            <td>
-              <button
-                (click)="removeRow(i); showError = false; errorMessage = ''"
-              >
-                X
-              </button>
-            </td>
-          </tr>
-        </table>
+                  <option *ngFor="let account of row.names" [ngValue]="account">
+                    {{ account }}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <select
+                  style="width: 150px"
+                  (change)="
+                    increaseDecreaseChange(i);
+                    showError = false;
+                    errorMessage = ''
+                  "
+                  [(ngModel)]="row.selectedIncreaseDecrease"
+                  class="table-head"
+                >
+                  <option
+                    *ngFor="let increaseDecrease of row.increaseDecrease"
+                    [ngValue]="increaseDecrease"
+                  >
+                    {{ increaseDecrease }}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  style="width: 100%"
+                  class="table-head"
+                  [(ngModel)]="row.amount"
+                  (change)="onAmountChange(i)"
+                  (input)="showError = false; errorMessage = ''"
+                />
+              </td>
+              <td>
+                {{ row.selectedType }}
+              </td>
+              <td style="width: 60px">{{ row.debitCredit }}</td>
+              <td>
+                <button
+                  (click)="removeRow(i); showError = false; errorMessage = ''"
+                  class="table-head"
+                >
+                  <i class="material-icons">&#xe872;</i>
+                </button>
+              </td>
+            </tr>
+          </table>
 
-        <div class="button-area btn-secondary">
-          <button (click)="addRow()" class="btn-grey-add-new">Add Row</button>
+          <div class="button-area btn-secondary">
+            <button (click)="addRow()" class="btn-grey-add-new">Add Row</button>
 
-          <div class="text-center text-danger">
-            <span *ngIf="showError"> {{ errorMessage }}</span>
+            <div class="text-center text-danger">
+              <span *ngIf="showError"> {{ errorMessage }}</span>
+            </div>
+            <button [disabled]="showError" (click)="submit()">Submit</button>
           </div>
-          <button [disabled]="showError" (click)="submit()">Submit</button>
+        </div>
+        <div class="opening-balance">
+          <div class="opening-balance-title">Opening Balance</div>
+
+          <label for="accountSelector">Account</label>
+          <select
+            class="table-head"
+            [(ngModel)]="updatedOpeningBalanceAccountName"
+          >
+            <option
+              *ngFor="let account of updetedOpeningList"
+              [ngValue]="account"
+            >
+              {{ account }}
+            </option>
+          </select>
+
+          <label>Amount</label>
+          <input
+            type="text"
+            class="table-head"
+            [(ngModel)]="updatedOpeningBalanceAccountValue"
+          />
+          <button (click)="updateOpeningBalance()">Update</button>
         </div>
       </div>
 
@@ -137,28 +162,21 @@
       </div>
     </div>
 
-    <div class="opening-balance">
+    <!-- <div class="opening-balance">
       <div class="opening-balance-title">Opening Balance</div>
 
       <label for="accountSelector">Account</label>
-      <select class="" [(ngModel)]="updatedOpeningBalanceAccountName">
-        <option
-          *ngFor="let account of updetedOpeningList"
-          [ngValue]="account"
-        >
+      <select class="table-head" [(ngModel)]="updatedOpeningBalanceAccountName">
+        <option *ngFor="let account of updetedOpeningList" [ngValue]="account">
           {{ account }}
         </option>
       </select>
 
       <label>Amount</label>
-      <input
-        type="text"
-        [(ngModel)]="updatedOpeningBalanceAccountValue"
-      />
-
+      <input type="text" [(ngModel)]="updatedOpeningBalanceAccountValue" />
 
       <button (click)="updateOpeningBalance()">Update</button>
-    </div>
+    </div> -->
     <!-- -------------------------- -->
     <!-- <div class="transaction-input">
       <label for="transaction">Transaction : </label>
@@ -280,35 +298,48 @@
     </div>
     <br />
 
-
+    <!-- Table View  -->
+    <div class="view-container" *ngIf="showGrid && gridRows.length">
+      <div class="view-label" (click)="switch('summary')">
+        Summary View
+        <div *ngIf="selectView == 'summary'" class="label-border"></div>
+      </div>
+      <div class="view-label" style="margin-left: 8px"  (click)="switch('detailed')">
+        Detailed View
+        <div *ngIf="selectView == 'detailed'" class="label-border"></div>
+      </div>
+    </div>
     <!-- Total grid  -->
 
-    <table *ngIf="showGrid" class="table table-bordered border-light">
+    <table *ngIf="showGrid && gridRows.length" class="table table-bordered border-light">
       <tr>
-        <th
-          *ngFor="let row of columns; index as i"
-        >
+        <th *ngFor="let row of columns; index as i" class="table-head">
           <span [ngStyle]="getCellClass(row)">{{ row }}</span>
         </th>
         <th></th>
       </tr>
-      <tr *ngFor="let row of gridRows; index as k">
+      <tr *ngFor="let row of gridRows; index as k" class="table-head">
         <td *ngFor="let y of columns; index as i">
-          <span [ngStyle]="getCellClass(y)">{{ getAccountNameIndexAndValue(row, y) }}</span>
+          <span [ngStyle]="getCellClass(y)">{{
+            getAccountNameIndexAndValue(row, y)
+          }}</span>
         </td>
         <td>
-          <button (click)="removeDetailRow(k)">X</button>
+          <button (click)="removeDetailRow(k)" class="table-head">
+            <i class="material-icons">&#xe872;</i>
+          </button>
         </td>
       </tr>
-      <tr>
+      <tr class="table-head">
         <td *ngFor="let y of columns; index as i">
-          <span [ngStyle]="getCellClass(y)">{{ getTotalValue(total, i, y) }}</span>
+          <span [ngStyle]="getCellClass(y)">{{
+            getTotalValue(total, i, y)
+          }}</span>
         </td>
       </tr>
     </table>
     <br />
 
     <!-- Grid end -->
-
   </div>
 </div>

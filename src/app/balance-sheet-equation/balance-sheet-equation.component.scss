@@ -40,70 +40,146 @@
     .graph-and-input-area {
       display: flex;
 
-      .transcation-details {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        padding: 16px;
-        gap: 8px;
-        width: 612px;
-        height: 279px;
-        background: #ffffff;
-        border: 1px solid #4a31df;
-        border-radius: 16px;
-        flex: none;
-        flex-grow: 0;
-        margin-left: 8px;
-        margin-top: 16px;
-
-        .transtaction-title {
-          font-family: "Inter";
-          font-style: normal;
-          font-weight: 700;
-          font-size: 16px;
-          line-height: 20px;
-          color: #4a31df;
-          flex: none;
-          order: 0;
-          align-self: stretch;
-          flex-grow: 0;
-        }
-
-        .transaction-input-lable {
-          font-family: "Inter";
-          font-style: normal;
-          font-weight: 600;
-          font-size: 15px;
-          line-height: 16px;
-          color: rgba(0, 0, 0, 0.64);
-          flex: none;
-          order: 0;
-          flex-grow: 0;
-          align-self: start;
-        }
-
-        .name-input {
-          background: #ffffff;
-          border: 1px solid #bebebe;
-          border-radius: 3px;
-          flex: none;
-          align-self: stretch;
-          flex-grow: 0;
-        }
-
-        .button-area {
+      .transaction-opening {
+        .transcation-details {
           display: flex;
-          justify-content: space-between;
-          width: 100%;
+          flex-direction: column;
+          align-items: flex-end;
+          padding: 16px;
+          gap: 8px;
+          width: 612px;
+          height: fit-content;
+          background: #ffffff;
+          border: 1px solid #4a31df;
+          border-radius: 16px;
+          flex: none;
+          flex-grow: 0;
+          margin-top: 16px;
+          margin-bottom: 16px;
 
-          button {
-            background-color: #4a31df;
-            color: #ffffff;
+          .transtaction-title {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 20px;
+            color: #4a31df;
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
           }
 
-          .btn-grey-add-new {
-            background-color: #4e4e4e !important;
+          .transaction-input-lable {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 16px;
+            color: rgba(0, 0, 0, 0.64);
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            align-self: start;
+          }
+
+          .name-input {
+            background: #ffffff;
+            border: 1px solid #bebebe;
+            border-radius: 3px;
+            flex: none;
+            align-self: stretch;
+            flex-grow: 0;
+          }
+
+          .button-area {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            button {
+              background-color: #4a31df;
+              color: #ffffff;
+              color: #fff;
+              /* H3 */
+              font-family: Inter;
+              font-size: 12px;
+              font-style: normal;
+              font-weight: 800;
+              line-height: 16px; /* 133.333% */
+              letter-spacing: 0.48px;
+              text-transform: uppercase;
+              width: 120px;
+              padding: 8px;
+              border-radius: 2px;
             }
+
+            .btn-grey-add-new {
+              background-color: #4e4e4e !important;
+            }
+          }
+        }
+        .opening-balance {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 16px;
+          gap: 8px;
+          background: #ffffff;
+          border: 1px solid #4a31df;
+          border-radius: 16px;
+          margin-top: auto;
+          width: calc(620px - 8px);
+          position: relative;
+          margin-top: auto;
+
+          .opening-balance-title {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 20px;
+            color: #4a31df;
+          }
+
+          label {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 16px;
+            color: rgba(0, 0, 0, 0.64);
+          }
+
+          select {
+            border: 1px solid #818181;
+            width: 100%;
+            border-radius: 3px;
+          }
+
+          input {
+            width: 100%;
+            border: 1px solid grey;
+            border-radius: 3px;
+          }
+
+          button {
+            align-self: flex-end;
+            background-color: #4a31df;
+            color: #ffffff;
+            color: #fff;
+            /* H3 */
+            font-family: Inter;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 800;
+            line-height: 16px; /* 133.333% */
+            letter-spacing: 0.48px;
+            text-transform: uppercase;
+            width: 120px;
+            padding: 8px;
+            border-radius: 2px;
+          }
         }
       }
 
@@ -114,7 +190,7 @@
         padding: 16px;
         gap: 8px;
         width: auto;
-        height: auto;
+        height: fit-content;
         background: #ffffff;
         border: 1px solid rgba(41, 46, 51, 0.24);
         border-radius: 18px;
@@ -131,7 +207,7 @@
         padding: 16px;
         gap: 8px;
         width: auto;
-        height: auto;
+        height: fit-content;
         background: #ffffff;
         border: 1px solid rgba(41, 46, 51, 0.24);
         border-radius: 18px;
@@ -172,6 +248,58 @@
       margin-top: 30px;
       border: 1px solid #818181;
     }
+
+    .table-head {
+      color: var(--black-text-72, rgba(41, 46, 51, 0.72));
+      /* Body */
+      font-family: Inter;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px; /* 160% */
+    }
+
+    .top-table-head {
+      color: rgba(0, 0, 0, 0.64);
+      /* Body Bold */
+      font-family: Inter;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px; /* 106.667% */
+    }
+
+    .graph-headers {
+      color: var(--Primary, #4a31df);
+      /* H2 */
+      font-family: Inter;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 20px; /* 125% */
+    }
+    .view-container {
+      display: flex;
+      margin-bottom: 8px;
+      .view-label {
+        color: var(--Primary, #4a31df);
+        /* H2 */
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 20px; /* 125% */
+        cursor: pointer;
+        .label-border {
+          border-bottom: 4px solid var(--Primary, #4a31df);
+        }
+      }
+      .view-label:hover {
+        color: var(--Primary, #1c134e);
+        opacity: 0.6;
+        transition: 0.6s;
+      }
+    }
   }
   .graphContainer {
     display: flex;
@@ -203,9 +331,10 @@ button {
   background: #ffffff;
   border: 1px solid #4a31df;
   border-radius: 16px;
-  margin-top: -144px;
-  width: calc(620px - 8px );
-  margin-left: 8px;
+  margin-top: auto;
+  width: calc(620px - 8px);
+  position: relative;
+  margin-top: auto;
 
   .opening-balance-title {
     font-family: "Inter";
@@ -241,7 +370,17 @@ button {
     align-self: flex-end;
     background-color: #4a31df;
     color: #ffffff;
-
+    color: #fff;
+    /* H3 */
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 16px; /* 133.333% */
+    letter-spacing: 0.48px;
+    text-transform: uppercase;
+    width: 120px;
+    padding: 8px;
+    border-radius: 2px;
   }
-
 }
