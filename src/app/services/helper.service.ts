@@ -7,6 +7,7 @@ import { constantsX } from '../constants/constant';
 export class HelperService {
   rowData: any = [];
   updatedColumn: any = [];
+
   accountName = [
     'Select Account..',
     'Cash',
@@ -204,7 +205,6 @@ export class HelperService {
     if (retainedEarnings != 0) {
       newRow[constantsX.accountName['Retained Earnings']] = retainedEarnings;
     }
-
     if (!update) this.rowData.push(newRow);
     return this.rowData;
   }
@@ -215,26 +215,19 @@ export class HelperService {
       columnData[0].forEach((column: any) => {
         let columnSum: number = 0;
         data.forEach((row: any) => {
-          console.log('-------', row, column);
           columnSum = columnSum + Number(row[constantsX.accountName[column]]);
-          console.log(columnSum, '----', column);
         });
         totalColumn[constantsX.accountName[column]] = columnSum;
       });
-    }
-    else{
+    } else {
       columnData.forEach((column: any) => {
         let columnSum: number = 0;
         data.forEach((row: any) => {
-          console.log('-------', row, column);
           columnSum = columnSum + Number(row[constantsX.accountName[column]]);
-          console.log(columnSum, '----', column);
         });
         totalColumn[constantsX.accountName[column]] = columnSum;
       });
     }
-
-    console.log(totalColumn, 'totalColumn');
     return this.balanceTheSheet(totalColumn);
   }
 
@@ -255,8 +248,6 @@ export class HelperService {
         totalColumn[constantsX.accountName['Common stock']] +
         totalColumn[constantsX.accountName['Retained Earnings']];
     }
-
-    // console.log(totalColumn[constantsX.accountName['Retained Earnings']] ,totalColumn[constantsX.accountName['Common stock']] )
     return totalColumn;
   }
 
@@ -287,7 +278,6 @@ export class HelperService {
       return constantsX.accountName[item];
     });
     this.updatedColumn = [];
-    console.log(sortUpdatedColumns, this.updatedColumn);
     sortUpdatedColumns
       .sort((a: number, b: number) => a - b)
       .forEach((index: number) => {
@@ -437,6 +427,7 @@ export class HelperService {
     });
     return ExpensesGraph;
   }
+
   addOpeningBalance() {
     let openingBalance = new Array(39).fill(0);
     openingBalance[0] = 'Opening Balance';
